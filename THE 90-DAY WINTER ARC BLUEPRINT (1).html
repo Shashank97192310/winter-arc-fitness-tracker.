@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE 90-DAY WINTER ARC BLUEPRINT (OCTOBER – DECEMBER)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            arc: {
+              50: '#ecfdf5',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              accent: '#38bdf8',
+              amber: '#f59e0b',
+              purple: '#a855f7',
+              slate: '#0f172a',
+              card: '#1e293b',
+              inner: '#151f30'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    .glow-border {
+      box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.2);
+    }
+    .badge-code {
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+    }
+    .tab-active {
+      background: #10b981 !important;
+      color: #0f172a !important;
+      font-weight: 700;
+    }
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body class="bg-[#0b1120] text-slate-100 font-sans min-h-screen antialiased selection:bg-arc-500 selection:text-slate-950 pb-20">
+
+  <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Brand & Mission Header -->
+      <div class="flex items-center justify-between w-full md:w-auto">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-arc-600 via-arc-500 to-arc-accent p-[1px] shadow-lg">
+            <div class="w-full h-full bg-[#0f172a] rounded-[11px] flex items-center justify-center">
+              <i data-lucide="shield-check" class="w-5 h-5 text-arc-400"></i>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-sm sm:text-base font-black tracking-tight text-white uppercase">The 90-Day Winter Arc</h1>
+              <span class="text-[10px] font-bold text-arc-400 px-2 py-0.5 rounded-full bg-arc-500/10 border border-arc-500/25">OCT – DEC</span>
+            </div>
+            <p class="text-xs text-slate-400">Target: 86.6 kg &rarr; &lt;78 kg • Shift: 6:00 PM – 3:00 AM</p>
+          </div>
+        </div>
+
+        <!-- Mobile Quick-Actions -->
+        <div class="flex md:hidden items-center gap-2">
+          <button onclick="openModal('audit-modal')" class="p-2 rounded-lg bg-slate-800 text-arc-accent border border-slate-700" title="Milestone Audit">
+            <i data-lucide="target" class="w-4 h-4"></i>
+          </button>
+          <button onclick="openModal('backup-modal')" class="p-2 rounded-lg bg-slate-800 text-slate-300 border border-slate-700" title="Data Backup">
+            <i data-lucide="database" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Date Switcher Engine -->
+      <div class="flex items-center justify-between w-full md:w-auto gap-2 bg-[#151f30] px-3.5 py-1.5 rounded-xl border border-slate-800">
+        <button id="prev-date-btn" class="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </button>
+        
+        <div class="flex items-center gap-2">
+          <i data-lucide="calendar" class="w-4 h-4 text-arc-400"></i>
+          <input type="date" id="date-picker" class="bg-transparent text-xs sm:text-sm font-semibold text-slate-200 focus:outline-none cursor-pointer">
+          <span id="day-pill" class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-slate-800 text-arc-400">Mon</span>
+          <button id="today-btn" class="text-[11px] font-semibold uppercase px-2 py-0.5 bg-arc-500/20 hover:bg-arc-500/30 text-arc-400 rounded transition">Today</button>
+        </div>
+
+        <button id="next-date-btn" class="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition">
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Action Buttons Desktop -->
+      <div class="hidden md:flex items-center gap-2.5">
+        <button onclick="openModal('audit-modal')" class="flex items-center gap-1.5 bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 px-3 py-1.5 rounded-xl text-sky-400 text-xs font-bold transition">
+          <i data-lucide="target" class="w-4 h-4"></i>
+          <span>Oct 31 Milestone Audit</span>
+        </button>
+        <button onclick="openModal('backup-modal')" class="p-2 hover:bg-slate-800 rounded-xl text-slate-400 hover:text-slate-200 border border-slate-800 transition" title="Backup / Restore">
+          <i data-lucide="database" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 pt-6 space-y-6">
+
+    <section class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 shadow-xl glow-border">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-black uppercase tracking-wider text-arc-400 px-2 py-0.5 bg-arc-500/10 rounded-full border border-arc-500/20">Nightly Verification</span>
+            <span class="text-xs text-slate-400">Earned nightly at <strong class="text-slate-200 font-mono">3:45 AM</strong></span>
+          </div>
+          <h2 class="text-lg sm:text-xl font-black text-white">Daily Code String: <span id="string-complete-pct" class="text-arc-400">0%</span> Complete</h2>
+          <p class="text-xs text-slate-400">Check off all 7 core nutritional anchors to unlock your daily winter arc proof string.</p>
+        </div>
+
+        <!-- Tracking String Badges -->
+        <div class="flex flex-wrap items-center gap-2 bg-[#151f30] p-3 rounded-xl border border-slate-800 w-full lg:w-auto">
+          <div id="code-badge-J" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
+            <span>[ J ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">ABC</span>
+          </div>
+          <div id="code-badge-S" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
+            <span>[ S ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Seeds</span>
+          </div>
+          <div id="code-badge-O" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
+            <span>[ O ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Oats</span>
+          </div>
+          <div id="code-badge-E" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
+            <span>[ E ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">5 Eggs</span>
+          </div>
+          <div id="code-badge-R" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
+            <span>[ R ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Paneer/Rice</span>
+          </div>
+          <div id="code-badge-C" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
+            <span>[ C ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Cothas</span>
+          </div>
+          <div id="code-badge-L" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
+            <span>[ L ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Amul Lassi</span>
+          </div>
+
+          <button onclick="copyGeneratedString()" class="ml-auto lg:ml-2 px-3 py-1.5 rounded-lg bg-arc-500 hover:bg-arc-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>Copy String</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- Energy Deficit Card -->
+      <div class="bg-[#1e293b] p-4 rounded-2xl border border-slate-800">
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+          <span class="font-bold uppercase tracking-wider text-arc-400">Total Energy</span>
+          <span>Target ~500 kcal Deficit</span>
+        </div>
+        <div class="text-2xl font-black text-white font-mono">~1,780 <span class="text-xs font-sans font-normal text-slate-400">kcal</span></div>
+        <div class="mt-2 text-xs text-slate-400">
+          Pure fat oxidation threshold designed to preserve lean muscle at 86.6 kg without CNS fatigue.
+        </div>
+      </div>
+
+      <!-- Protein Target Card -->
+      <div class="bg-[#1e293b] p-4 rounded-2xl border border-slate-800">
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+          <span class="font-bold uppercase tracking-wider text-rose-400">Total Protein</span>
+          <span>~1.5g / kg</span>
+        </div>
+        <div class="text-2xl font-black text-white font-mono">125g – 130g</div>
+        <div class="mt-2 text-xs text-slate-400">
+          Complete amino acids via 5 eggs, whey, high-protein paneer / soya chunks, and protein oats.
+        </div>
+      </div>
+
+      <!-- Carbs & Fats Card -->
+      <div class="bg-[#1e293b] p-4 rounded-2xl border border-slate-800">
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+          <span class="font-bold uppercase tracking-wider text-amber-400">Carbs & Fats</span>
+          <span>Clean Sustained Fuel</span>
+        </div>
+        <div class="text-base font-black text-white font-mono">
+          <span class="text-amber-400">160–180g C</span> • <span class="text-sky-400">45–50g F</span>
+        </div>
+        <div class="mt-2 text-xs text-slate-400">
+          Beta-glucans, rice, beetroot pulp, egg lipids & seed PUFAs for stable corporate shift cognition.
+        </div>
+      </div>
+
+      <!-- Water & Nightly Hydration -->
+      <div class="bg-[#1e293b] p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+            <span class="font-bold uppercase tracking-wider text-sky-400">Water Target</span>
+            <span class="font-mono text-white" id="water-display-count">0 / 2.5 L</span>
+          </div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden mb-2">
+            <div id="water-progress-bar" class="bg-sky-400 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="addWaterMl(250)" class="w-1/2 py-1 bg-slate-800 hover:bg-sky-500/20 hover:text-sky-300 border border-slate-700 rounded-lg text-xs font-semibold transition">+250 ml</button>
+          <button onclick="addWaterMl(500)" class="w-1/2 py-1 bg-slate-800 hover:bg-sky-500/20 hover:text-sky-300 border border-slate-700 rounded-lg text-xs font-semibold transition">+500 ml</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="p-1.5 rounded-lg bg-arc-purple/10 text-arc-purple border border-arc-purple/20">
+            <i data-lucide="pill" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">Micronutrient & Supplement Absorption Protocol</h3>
+            <p class="text-xs text-slate-400">Biochemically isolated timing to eliminate absorption competition</p>
+          </div>
+        </div>
+        <span class="text-xs font-semibold text-slate-400" id="supplements-status-count">0 / 5 Active</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3" id="supplements-container">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <!-- MAIN GRID: DAILY TIMELINE & OPERATIONAL MILESTONES (7 Cols) + 4-WEEK WORKOUT ENGINE & WEIGHT (5 Cols) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <section class="lg:col-span-7 bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4 shadow-lg">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="p-1.5 rounded-lg bg-arc-500/10 text-arc-400 border border-arc-500/20">
+              <i data-lucide="clock" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">Daily Timeline & Shift Schedule</h3>
+              <p class="text-xs text-slate-400">Operational Milestones • 10:30 AM Wake-Up to 3:45 AM Sleep</p>
+            </div>
+          </div>
+          <button onclick="markAllTimelineComplete()" class="text-xs font-semibold text-arc-400 hover:text-arc-300">Check All</button>
+        </div>
+
+        <!-- Interactive Milestones List -->
+        <div class="space-y-3" id="timeline-list-container">
+          <!-- Timeline milestones injected dynamically -->
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: 4-WEEK STRUCTURAL REBUILD & OFFICIAL WEIGHT SCALE -->
+      <section class="lg:col-span-5 space-y-6">
+
+        <!-- WORKOUT REBUILD PROTOCOL -->
+        <div class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4 shadow-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-3 gap-2">
+            <div class="flex items-center gap-2.5">
+              <div class="p-1.5 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                <i data-lucide="dumbbell" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white" id="workout-box-title">Spine-Safe Structural Rebuild</h3>
+                <p class="text-xs text-slate-400">11:30 AM Window • Zero Spinal Compression</p>
+              </div>
+            </div>
+
+            <!-- Manual Override Select -->
+            <select id="workout-split-selector" class="bg-[#151f30] border border-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-arc-500">
+              <option value="Day A">Mon: Day A (Posture & Anchor)</option>
+              <option value="LISS Tue">Tue: 45m Brisk LISS Walk</option>
+              <option value="Day B">Wed: Day B (Posterior Chain & Core)</option>
+              <option value="LISS Thu">Thu: 45m Brisk LISS Walk</option>
+              <option value="Day C">Fri: Day C (Full Body Activation)</option>
+              <option value="LISS Sat">Sat: 45m Outdoor Walk</option>
+              <option value="LISS Sun">Sun: 45m Active Rest & Walk</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Primer Banner -->
+          <div class="p-3 rounded-xl bg-arc-500/10 border border-arc-500/25 text-xs">
+            <div class="flex items-center gap-2 font-bold text-arc-400">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span id="primer-title">Dynamic Primer (5 min)</span>
+            </div>
+            <p id="primer-description" class="text-slate-300 mt-1 leading-relaxed">
+              Cat-Cow (10 reps) + Bird Dogs (3 sets × 8 reps/side with 2s glute squeeze at top).
+            </p>
+          </div>
+
+          <!-- Workout Movement Checklist -->
+          <div class="space-y-2.5" id="workout-moves-container">
+            <!-- Injected by JavaScript -->
+          </div>
+
+          <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-800">
+            <span id="workout-completion-text" class="text-slate-400">0 of 5 completed</span>
+            <button onclick="markCurrentWorkoutAllDone()" class="font-bold text-arc-400 hover:text-arc-300">Complete Routine</button>
+          </div>
+        </div>
+
+        <!-- OFFICIAL 3:45 AM WEIGHT SCALE & CHART -->
+        <div class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4 shadow-lg">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i data-lucide="scale" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white">Official 3:45 AM Scale Weigh-In</h3>
+                <p class="text-xs text-slate-400">Pre-sleep standardized condition</p>
+              </div>
+            </div>
+            <span class="text-xs font-mono font-bold text-arc-400">Target: &lt;78.0 kg</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <input type="number" id="scale-weight-input" placeholder="86.6" step="0.1" class="w-full bg-[#151f30] border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white font-mono font-bold focus:outline-none focus:border-arc-500">
+            <button onclick="logScaleWeight()" class="bg-arc-500 hover:bg-arc-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shrink-0">Log Weight</button>
+          </div>
+
+          <!-- Weight Progression Chart -->
+          <div class="pt-2">
+            <div class="flex items-center justify-between mb-1.5 text-xs text-slate-400">
+              <span>7-Day Progression Curve</span>
+              <span id="weight-trend-metric" class="font-semibold text-white">Starting: 86.6 kg</span>
+            </div>
+            <div class="h-40 w-full relative">
+              <canvas id="weightCurveCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL: 4-WEEK MILESTONE AUDIT (OCTOBER 31) -->
+  <div id="audit-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 hidden">
+    <div class="bg-[#1e293b] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-700 p-6 shadow-2xl relative space-y-5">
+      
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+        <div>
+          <h3 class="font-black text-white text-base sm:text-lg flex items-center gap-2">
+            <i data-lucide="target" class="w-5 h-5 text-sky-400"></i>
+            4-Week Milestone Audit: October 31 Baseline Test
+          </h3>
+          <p class="text-xs text-slate-400">Objective physical check before transitioning to a 4-Day Upper/Lower Split</p>
+        </div>
+        <button onclick="closeModal('audit-modal')" class="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs text-slate-300 leading-relaxed">
+        
+        <!-- Criterion 1: Weight -->
+        <div class="p-4 rounded-xl bg-[#151f30] border border-slate-800 flex items-start gap-3">
+          <div class="p-2 rounded-lg bg-arc-500/10 text-arc-400 shrink-0 font-bold font-mono">01</div>
+          <div>
+            <h4 class="font-bold text-white text-sm">Scale Goal: Sub-83.5 kg</h4>
+            <p class="text-slate-400 mt-1">Starting from 86.6 kg, shedding 3.1+ kg of glycogen inflammation, visceral water, and active adipose tissue under the ~1,780 kcal energy deficit.</p>
+          </div>
+        </div>
+
+        <!-- Criterion 2: Lumbar Spine -->
+        <div class="p-4 rounded-xl bg-[#151f30] border border-slate-800 flex items-start gap-3">
+          <div class="p-2 rounded-lg bg-amber-500/10 text-amber-400 shrink-0 font-bold font-mono">02</div>
+          <div>
+            <h4 class="font-bold text-white text-sm">Spine Health: 100% Desk Strain Resolution</h4>
+            <p class="text-slate-400 mt-1">Complete alleviation of lumbar tightness through Bird Dogs, Glute Bridges, dead hangs, and 4 days of purposeful Zone 2 walking.</p>
+          </div>
+        </div>
+
+        <!-- Criterion 3: Relative Bodyweight Strength -->
+        <div class="p-4 rounded-xl bg-[#151f30] border border-slate-800 flex items-start gap-3">
+          <div class="p-2 rounded-lg bg-sky-500/10 text-sky-400 shrink-0 font-bold font-mono">03</div>
+          <div>
+            <h4 class="font-bold text-white text-sm">Relative Strength Benchmark</h4>
+            <p class="text-slate-400 mt-1">Progression from 10–12 pushups & 1 shaky pull-up to <strong class="text-white">18–20 uninterrupted pushups</strong> and <strong class="text-white">3–4 strict unassisted pull-ups</strong> as power-to-weight ratio increases.</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-arc-500/10 border border-arc-500/30 text-arc-300">
+          <strong>Next Phase Unlock:</strong> Meeting all three criteria by October 31 unlocks the 4-Day Upper/Lower Strength Hypertrophy Split for November & December.
+        </div>
+
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="closeModal('audit-modal')" class="px-5 py-2 text-xs font-bold bg-arc-500 hover:bg-arc-400 text-slate-950 rounded-xl transition">Understood</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: BACKUP & DATA RESTORATION -->
+  <div id="backup-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 hidden">
+    <div class="bg-[#1e293b] w-full max-w-md rounded-2xl border border-slate-700 p-5 shadow-2xl space-y-4 text-xs">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2.5">
+        <h3 class="font-bold text-white text-sm flex items-center gap-2">
+          <i data-lucide="database" class="w-4 h-4 text-arc-400"></i>
+          Blueprint Data Backup & Export
+        </h3>
+        <button onclick="closeModal('backup-modal')" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <p class="text-slate-400">Save your full 90-day winter arc checklist, daily string records, and scale weights to a local JSON file or transfer across devices.</p>
+
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="downloadBackupJson()" class="py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-white font-bold flex items-center justify-center gap-1.5 transition">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i> Export .JSON
+        </button>
+        <button onclick="copyRawJson()" class="py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-white font-bold flex items-center justify-center gap-1.5 transition">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy to Clipboard
+        </button>
+      </div>
+
+      <div>
+        <label class="block text-slate-400 mb-1">Restore from Raw JSON</label>
+        <textarea id="import-json-area" placeholder="Paste previously exported JSON payload here..." rows="4" class="w-full bg-[#151f30] border border-slate-800 rounded-xl p-2.5 font-mono text-[11px] text-slate-200 focus:outline-none focus:border-arc-500"></textarea>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-1">
+        <button onclick="closeModal('backup-modal')" class="px-3.5 py-1.5 text-slate-400">Cancel</button>
+        <button onclick="restoreBackupJson()" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition">Restore Logs</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFIER -->
+  <div id="toast-notify" class="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-[#151f30] border border-slate-700 shadow-2xl px-4 py-3 rounded-xl text-xs font-bold text-white transition-all transform translate-y-24 opacity-0 pointer-events-none">
+    <i id="toast-icon" data-lucide="check-circle" class="w-4 h-4 text-arc-400"></i>
+    <span id="toast-text">Update saved</span>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'winter_arc_90day_blueprint_v1';
+
+    // The Complete 10:30 AM to 3:45 AM Shift Protocol Timeline
+    const TIMELINE_BLUEPRINT = [
+      {
+        id: 't-1030',
+        time: '10:30 AM',
+        title: 'Wake-Up & Pre-Workout Primer',
+        intake: 'ABC Shot: 2 Amlas + ½ Beetroot + ½ Carrot + 1" Ginger + 10–12 Curry leaves (blended with pulp) + 1.5 scoops Watermelon Creatine + 1 tsp Moringa',
+        target: 'Dietary Nitrates, ~800mg Vitamin C, 5g Creatine, Electrolytes',
+        code: 'J',
+        codeName: 'ABC Shot + Creatine + Moringa'
+      },
+      {
+        id: 't-1100',
+        time: '11:00 AM',
+        title: 'Movement Prep & Priming',
+        intake: '20–30 min Yoga Mobility + Chores + 600m Walk to Gym',
+        target: 'Joint lubrication, spinal decompression',
+        code: null
+      },
+      {
+        id: 't-1130',
+        time: '11:30 AM – 12:15 PM',
+        title: 'Training Window',
+        intake: '3-Day Full Body Rebuild (Mon/Wed/Fri) OR 45-Min Brisk Walk (Tue/Thu/Sat/Sun)',
+        target: 'Hypertrophy stimulus / Active Zone 2 fat oxidation',
+        code: null
+      },
+      {
+        id: 't-1300',
+        time: '1:00 PM',
+        title: 'Post-Workout Anabolic Anchor',
+        intake: '5 Whole Boiled Eggs + Vitamin D3 (2,000 IU) + Omega-3 Flaxseed Oil Capsule',
+        target: '30g Protein, Choline, Fat-soluble vitamin transport',
+        code: 'E',
+        codeName: '5 Whole Boiled Eggs'
+      },
+      {
+        id: 't-1400',
+        time: '2:00 PM',
+        title: 'High-Protein Satiety Anchor',
+        intake: '80g High-Protein Oats + 100g Curd (thinned with water) + 1 Scoop Protein Powder + Custom Seed Mix',
+        target: '~49.5g Protein, Beta-glucans, Prebiotics, Healthy fats',
+        code: 'O_S', // Represents both O and S
+        codeName: 'Protein Oats (O) & Seed Mix (S)'
+      },
+      {
+        id: 't-1630',
+        time: '4:30 PM',
+        title: 'Pre-Shift Commute Buffer',
+        intake: 'Iron Capsule + Fresh Lemon Water (Strictly away from dairy & caffeine)',
+        target: 'Maximum non-heme iron absorption',
+        code: null
+      },
+      {
+        id: 't-1800',
+        time: '6:00 PM',
+        title: 'Shift Starts',
+        intake: 'Desk arrival (sustained fullness from 2:00 PM meal)',
+        target: 'Cognitive focus',
+        code: null
+      },
+      {
+        id: 't-1830',
+        time: '6:30 PM – 7:00 PM',
+        title: 'Office Snack Break',
+        intake: '2–3 Shots Black Cothas Coffee (Zero sugar, zero milk) + Vitamin B12 + 500ml Water',
+        target: 'Adenosine blockade, cellular energy, 8.5h sleep buffer',
+        code: 'C',
+        codeName: 'Black Cothas Coffee (before 8:30 PM)'
+      },
+      {
+        id: 't-2100',
+        time: '9:00 PM – 9:30 PM',
+        title: 'Office Dinner Break',
+        intake: '100g Milky Mist High-Protein Paneer (or 50g Soya Chunks, double-soaked/squeezed/minced) + Cooked Rice + Mixed Veggies + Hing & Jeera',
+        target: '25g Protein, Zero-bloat gut comfort',
+        code: 'R',
+        codeName: 'Paneer / Soya Rice Tiffin'
+      },
+      {
+        id: 't-0000',
+        time: '12:00 AM – 12:30 AM',
+        title: 'Midnight Hunger Shield',
+        intake: '1 Pack Amul Protein Lassi (200ml)',
+        target: '14g Slow-release dairy protein, craving suppression',
+        code: 'L',
+        codeName: 'Midnight Amul Protein Lassi'
+      },
+      {
+        id: 't-0030',
+        time: '12:30 AM – 3:00 AM',
+        title: 'Shift Finish & Fast',
+        intake: 'Kitchen closed. Water only (complete 2.5L daily target).',
+        target: 'Insulin stabilization & gut rest',
+        code: null
+      },
+      {
+        id: 't-0345',
+        time: '3:45 AM',
+        title: 'Nightly Ritual & Sleep',
+        intake: 'Official Scale Weigh-in + Magnesium Capsule → Sleep in a cool, dark room',
+        target: 'CNS relaxation, REM sleep optimization',
+        code: null
+      }
+    ];
+
+    // Micronutrient & Supplement protocol isolation definitions
+    const MICRONUTRIENT_SUPPLEMENTS = [
+      { key: 'supp_vitc', label: 'Vitamin C & Nitrates', time: '10:30 AM', desc: '2 Amlas (~800mg Vit C) + Beetroot in ABC shot' },
+      { key: 'supp_d3', label: 'Vitamin D3 & Omega-3', time: '1:00 PM', desc: 'Fat-soluble, taken with whole egg yolks' },
+      { key: 'supp_iron', label: 'Elemental Iron + Lemon', time: '4:30 PM', desc: 'Strictly away from dairy & coffee' },
+      { key: 'supp_b12', label: 'Vitamin B12 Methyl', time: '6:30 PM', desc: 'Shift stamina & neurological cellular energy' },
+      { key: 'supp_mag', label: 'Magnesium Capsule', time: '3:45 AM', desc: 'Pre-sleep CNS relaxation & slow-wave recovery' }
+    ];
+
+    // 4-Week Structural Rebuild Workout Schedule
+    const WORKOUT_SCHEDULE = {
+      'Day A': {
+        name: 'Day A (Monday): Posture & Upper Anchor',
+        primer: 'Dynamic Primer (5 min): Cat-Cow (10 slow reps) + Bird Dogs (3 sets × 8 reps/side with 2s glute hold).',
+        moves: [
+          { name: 'Lat Pulldowns (Wide/Neutral Grip)', sets: 3, reps: '10–12', cue: 'Pull to upper chest, 2-sec scapular squeeze' },
+          { name: 'Incline Bench Pushups (or Machine Chest Press)', sets: 3, reps: '8–10', cue: 'Hands elevated on bench, rigid core plank' },
+          { name: 'Goblet Box Squats', sets: 3, reps: '10', cue: '10–12 kg DB held at collarbone, sit back to box, drive heels' },
+          { name: 'Cable Face Pulls', sets: 3, reps: '15', cue: 'Rope pulled to eye level, external rotation' },
+          { name: 'Dead Hang', sets: 2, reps: '20–30s', cue: 'Gentle lumbar disc decompression' }
+        ]
+      },
+      'LISS Tue': {
+        name: 'Tuesday: Zone 2 Cardio (Brisk Walk)',
+        primer: '11:30 AM Rhythm Anchor: 20 min Light Hip Flexor & Psoas Stretch before walking.',
+        moves: [
+          { name: 'Continuous Outdoor Brisk Walk', sets: 1, reps: '40–45m', cue: '~4,000–5,000 steps, Zone 2 fat oxidation, zero back compression' },
+          { name: 'Kneeling Psoas Release', sets: 2, reps: '45s/side', cue: 'Neutral pelvis, squeeze glute' },
+          { name: 'Cat-Cow Fluid Flexion', sets: 2, reps: '10 reps', cue: 'Circulates spinal synovial fluid' }
+        ]
+      },
+      'Day B': {
+        name: 'Day B (Wednesday): Posterior Chain & Core Bracing',
+        primer: 'Dynamic Primer (5 min): Glute Bridges (2 sets × 15 reps, 2s hold) + Front Plank (45–60 sec).',
+        moves: [
+          { name: 'Chest-Supported Dumbbell Rows', sets: 3, reps: '10–12', cue: 'Prone on 30° incline bench, zero lower back load' },
+          { name: 'Seated DB Shoulder Press', sets: 3, reps: '10', cue: 'Back fully supported by upright bench' },
+          { name: 'Dumbbell Romanian Deadlifts (RDLs)', sets: 3, reps: '8–10', cue: 'Soft knees, hinge hips straight back, stop at mid-shin' },
+          { name: 'Cable Bicep Curls & Triceps Pushdowns Superset', sets: 3, reps: '12 each', cue: 'Strict isolation, controlled tempo' },
+          { name: 'Pallof Press (Cable / Resistance Band)', sets: 3, reps: '10/side', cue: 'Anti-rotation deep core stability for lumbar spine' }
+        ]
+      },
+      'LISS Thu': {
+        name: 'Thursday: Zone 2 Cardio (Brisk Walk)',
+        primer: '11:30 AM Rhythm Anchor: Glute Bridge holds (2 sets x 12 reps) to awaken dormant glutes.',
+        moves: [
+          { name: 'Continuous Outdoor Brisk Walk', sets: 1, reps: '40–45m', cue: '~4,000–5,000 steps, flat terrain or max 1% incline' },
+          { name: 'Thoracic Foam Rolling', sets: 2, reps: '12 passes', cue: 'Undo desk slouch' },
+          { name: 'Dead Hang Decompression', sets: 2, reps: '25s', cue: 'Decompress lumbar disc pressure' }
+        ]
+      },
+      'Day C': {
+        name: 'Day C (Friday): Full Body Strength Activation',
+        primer: 'Dynamic Primer (5 min): Bird Dogs (2 sets x 8 reps/side) + World’s Greatest Stretch (hip flexor release).',
+        moves: [
+          { name: 'Assisted Pull-Up Machine (or Neutral Lat Pulldown)', sets: 3, reps: '8–10', cue: 'Vertical pulling volume without 1-rep muscle exhaustion' },
+          { name: 'Flat Dumbbell Bench Press', sets: 3, reps: '8–10', cue: 'Retract shoulder blades, 3-second controlled eccentric' },
+          { name: 'Leg Press (Feet High & Wide)', sets: 3, reps: '10–12', cue: 'Full back supported on pad, protects lumbar spine' },
+          { name: 'Dumbbell Lateral Raises', sets: 3, reps: '12–15', cue: 'Lead with elbows, strict deltoid recruitment' },
+          { name: 'Dead Hang', sets: 2, reps: '30s', cue: 'Spinal decompression' }
+        ]
+      },
+      'LISS Sat': {
+        name: 'Saturday: Zone 2 Active Fat Oxidation',
+        primer: 'Flexible window: Daylight exposure & circadian rhythm maintenance.',
+        moves: [
+          { name: 'Continuous Brisk Walk / Errands', sets: 1, reps: '40–45m', cue: '~4,000–5,000 steps, non-taxing active recovery' },
+          { name: 'Full Body Gentle Foam Rolling', sets: 1, reps: '15m', cue: 'Relieve fascia tension' }
+        ]
+      },
+      'LISS Sun': {
+        name: 'Sunday: Active Rest & Circadian Reset',
+        primer: 'Flexible window: Full CNS relaxation after late night shifts.',
+        moves: [
+          { name: 'Outdoor Daylight Walk', sets: 1, reps: '40–45m', cue: 'Circadian melatonin reset & light aerobic conditioning' },
+          { name: 'Hamstring & Calves Lengthening', sets: 2, reps: '45s/side', cue: 'Pre-Monday spinal posture preparation' }
+        ]
+      }
+    };
+
+    let currentDateStr = getTodayString();
+    let appDatabase = loadStoredDatabase();
+    let weightChart = null;
+
+    /* ----------------------------------------------------
+       DATA HELPERS
+    ---------------------------------------------------- */
+    function getTodayString() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    function loadStoredDatabase() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        try { return JSON.parse(raw); } catch (e) { console.error('Parse error', e); }
+      }
+      return {};
+    }
+
+    function saveStoredDatabase() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appDatabase));
+    }
+
+    function getDayIndex(dateStr) {
+      const [y, m, d] = dateStr.split('-');
+      return new Date(y, m - 1, d).getDay();
+    }
+
+    function getDefaultSplitKeyForDay(dayIdx) {
+      switch (dayIdx) {
+        case 1: return 'Day A';
+        case 2: return 'LISS Tue';
+        case 3: return 'Day B';
+        case 4: return 'LISS Thu';
+        case 5: return 'Day C';
+        case 6: return 'LISS Sat';
+        case 0: return 'LISS Sun';
+        default: return 'Day A';
+      }
+    }
+
+    function getOrInitDateRecord(dateStr) {
+      if (!appDatabase[dateStr]) {
+        const dayIdx = getDayIndex(dateStr);
+        const splitKey = getDefaultSplitKeyForDay(dayIdx);
+
+        // Build default movements
+        const template = WORKOUT_SCHEDULE[splitKey];
+        const initialMoves = template.moves.map(m => ({ ...m, done: false, loggedWeight: '' }));
+
+        // Initial codes checked map: J, S, O, E, R, C, L
+        const initialCodes = { J: false, S: false, O: false, E: false, R: false, C: false, L: false };
+
+        // Initial timeline check map
+        const initialTimeline = {};
+        TIMELINE_BLUEPRINT.forEach(item => { initialTimeline[item.id] = false; });
+
+        // Initial supplements map
+        const initialSupps = {};
+        MICRONUTRIENT_SUPPLEMENTS.forEach(s => { initialSupps[s.key] = false; });
+
+        appDatabase[dateStr] = {
+          splitKey: splitKey,
+          timeline: initialTimeline,
+          codes: initialCodes,
+          supplements: initialSupps,
+          workoutMoves: initialMoves,
+          waterMl: 0,
+          scaleWeight: dateStr === getTodayString() ? 86.6 : ''
+        };
+        saveStoredDatabase();
+      }
+      return appDatabase[dateStr];
+    }
+
+    function showToast(msg, icon = 'check-circle') {
+      const toast = document.getElementById('toast-notify');
+      const text = document.getElementById('toast-text');
+      const ic = document.getElementById('toast-icon');
+
+      text.innerText = msg;
+      ic.setAttribute('data-lucide', icon);
+      lucide.createIcons();
+
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      }, 2300);
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    /* ----------------------------------------------------
+       RENDER CONTROLLER
+    ---------------------------------------------------- */
+    function renderCompleteApp() {
+      const record = getOrInitDateRecord(currentDateStr);
+      const dayIdx = getDayIndex(currentDateStr);
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      // Synchronize date controls
+      document.getElementById('date-picker').value = currentDateStr;
+      document.getElementById('day-pill').innerText = dayNames[dayIdx];
+
+      // Render Daily Tracking String & Badges
+      renderTrackingStringBadges(record);
+
+      // Render Water Tracker
+      const waterMl = record.waterMl || 0;
+      document.getElementById('water-display-count').innerText = `${(waterMl / 1000).toFixed(2)} / 2.5 L`;
+      const waterPct = Math.min(Math.round((waterMl / 2500) * 100), 100);
+      document.getElementById('water-progress-bar').style.width = `${waterPct}%`;
+
+      // Render Micronutrient Supplements
+      renderSupplementsList(record);
+
+      // Render Timeline
+      renderTimelineMilestones(record);
+
+      // Render Workout Program
+      renderWorkoutSection(record);
+
+      // Scale weight input & chart
+      document.getElementById('scale-weight-input').value = record.scaleWeight || '';
+      renderWeightTrend();
+
+      lucide.createIcons();
+    }
+
+    /* ----------------------------------------------------
+       TRACKING STRING GENERATION & VERIFICATION
+    ---------------------------------------------------- */
+    const CODE_ORDER = ['J', 'S', 'O', 'E', 'R', 'C', 'L'];
+
+    function renderTrackingStringBadges(record) {
+      let earnedCount = 0;
+
+      CODE_ORDER.forEach(code => {
+        const badge = document.getElementById(`code-badge-${code}`);
+        const isDone = Boolean(record.codes[code]);
+
+        if (isDone) {
+          earnedCount++;
+          badge.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-arc-500/20 text-arc-400 border border-arc-500/50 shadow-sm transition-all flex items-center gap-1';
+        } else {
+          badge.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1';
+        }
+      });
+
+      const pct = Math.round((earnedCount / CODE_ORDER.length) * 100);
+      const pctEl = document.getElementById('string-complete-pct');
+      pctEl.innerText = `${pct}%`;
+      pctEl.className = pct === 100 ? 'text-arc-400 font-extrabold' : 'text-slate-300';
+    }
+
+    function copyGeneratedString() {
+      const record = getOrInitDateRecord(currentDateStr);
+      const parts = CODE_ORDER.map(code => record.codes[code] ? code : '—');
+      const stringFormat = `[ ${parts.join(' - ')} ]`;
+      const pct = Math.round((CODE_ORDER.filter(c => record.codes[c]).length / CODE_ORDER.length) * 100);
+      const textToCopy = `WINTER ARC DAILY PROOF (${currentDateStr}): ${stringFormat} (${pct}% Achieved) | Scale Weight: ${record.scaleWeight ? record.scaleWeight + ' kg' : 'Pending 3:45 AM'}`;
+
+      const dummy = document.createElement('textarea');
+      dummy.value = textToCopy;
+      document.body.appendChild(dummy);
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+
+      showToast(`String Copied: ${stringFormat}`, 'copy');
+    }
+
+    /* ----------------------------------------------------
+       MICRONUTRIENT PROTOCOL LIST
+    ---------------------------------------------------- */
+    function renderSupplementsList(record) {
+      const container = document.getElementById('supplements-container');
+      container.innerHTML = '';
+      let activeCount = 0;
+
+      MICRONUTRIENT_SUPPLEMENTS.forEach(supp => {
+        const isChecked = Boolean(record.supplements[supp.key]);
+        if (isChecked) activeCount++;
+
+        const item = document.createElement('div');
+        item.className = `p-3 rounded-xl border transition flex items-start gap-2.5 cursor-pointer ${
+          isChecked ? 'bg-arc-500/10 border-arc-500/40 text-white' : 'bg-[#151f30] border-slate-800 text-slate-300 hover:border-slate-700'
+        }`;
+        item.onclick = () => toggleSupplement(supp.key);
+
+        item.innerHTML = `
+          <input type="checkbox" ${isChecked ? 'checked' : ''} class="mt-0.5 rounded text-arc-500 pointer-events-none accent-emerald-500">
+          <div class="space-y-0.5">
+            <div class="text-xs font-bold flex items-center gap-1.5">
+              <span>${supp.label}</span>
+              <span class="text-[10px] font-mono font-normal text-arc-accent px-1.5 py-0.2 rounded bg-sky-500/10">${supp.time}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-tight">${supp.desc}</p>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+
+      document.getElementById('supplements-status-count').innerText = `${activeCount} / ${MICRONUTRIENT_SUPPLEMENTS.length} Logged`;
+    }
+
+    function toggleSupplement(key) {
+      const record = getOrInitDateRecord(currentDateStr);
+      record.supplements[key] = !record.supplements[key];
+      saveStoredDatabase();
+      renderCompleteApp();
+    }
+
+    /* ----------------------------------------------------
+       TIMELINE & MILESTONE ENGINE
+    ---------------------------------------------------- */
+    function renderTimelineMilestones(record) {
+      const container = document.getElementById('timeline-list-container');
+      container.innerHTML = '';
+
+      TIMELINE_BLUEPRINT.forEach((item) => {
+        const isDone = Boolean(record.timeline[item.id]);
+        const card = document.createElement('div');
+
+        card.className = `p-3.5 rounded-xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+          isDone ? 'bg-arc-500/10 border-arc-500/40' : 'bg-[#151f30] border-slate-800'
+        }`;
+
+        let codeBadgeHtml = '';
+        if (item.code) {
+          if (item.code === 'O_S') {
+            const oDone = record.codes.O;
+            const sDone = record.codes.S;
+            codeBadgeHtml = `
+              <div class="flex items-center gap-1">
+                <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${oDone ? 'bg-arc-500 text-slate-950' : 'bg-slate-800 text-amber-400 border border-amber-500/30'}">[ O ]</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${sDone ? 'bg-arc-500 text-slate-950' : 'bg-slate-800 text-purple-400 border border-purple-500/30'}">[ S ]</span>
+              </div>
+            `;
+          } else {
+            const hasCode = record.codes[item.code];
+            codeBadgeHtml = `
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${hasCode ? 'bg-arc-500 text-slate-950' : 'bg-slate-800 text-arc-400 border border-arc-500/30'}">[ ${item.code} ]</span>
+            `;
+          }
+        }
+
+        card.innerHTML = `
+          <div class="flex items-start gap-3">
+            <button onclick="toggleTimelineItem('${item.id}', '${item.code}')" class="mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition ${
+              isDone ? 'bg-arc-500 border-arc-500 text-slate-950' : 'border-slate-600 hover:border-slate-400'
+            }">
+              ${isDone ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
+            </button>
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-mono text-xs font-bold text-arc-accent">${item.time}</span>
+                <span class="text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-white'}">${escapeHtml(item.title)}</span>
+                ${codeBadgeHtml}
+              </div>
+              <div class="text-xs text-slate-300 leading-snug">${escapeHtml(item.intake)}</div>
+              <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-3 h-3 text-arc-400"></i>
+                <span>${escapeHtml(item.target)}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sm:self-center shrink-0">
+            <button onclick="toggleTimelineItem('${item.id}', '${item.code}')" class="text-xs font-semibold px-2.5 py-1 rounded-lg transition ${
+              isDone ? 'bg-slate-800 text-slate-300' : 'bg-arc-500/20 hover:bg-arc-500/30 text-arc-400 border border-arc-500/30'
+            }">
+              ${isDone ? 'Completed' : 'Mark Done'}
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function toggleTimelineItem(itemId, itemCode) {
+      const record = getOrInitDateRecord(currentDateStr);
+      const newState = !record.timeline[itemId];
+      record.timeline[itemId] = newState;
+
+      // Automatically sync daily codes
+      if (itemCode) {
+        if (itemCode === 'O_S') {
+          record.codes.O = newState;
+          record.codes.S = newState;
+        } else {
+          record.codes[itemCode] = newState;
+        }
+      }
+
+      // Auto-sync supplements
+      if (itemId === 't-1030') record.supplements.supp_vitc = newState;
+      if (itemId === 't-1300') record.supplements.supp_d3 = newState;
+      if (itemId === 't-1630') record.supplements.supp_iron = newState;
+      if (itemId === 't-1830') record.supplements.supp_b12 = newState;
+      if (itemId === 't-0345') record.supplements.supp_mag = newState;
+
+      saveStoredDatabase();
+      renderCompleteApp();
+      showToast(newState ? 'Milestone Checked' : 'Milestone Unchecked');
+    }
+
+    function markAllTimelineComplete() {
+      const record = getOrInitDateRecord(currentDateStr);
+      TIMELINE_BLUEPRINT.forEach(item => {
+        record.timeline[item.id] = true;
+        if (item.code) {
+          if (item.code === 'O_S') {
+            record.codes.O = true;
+            record.codes.S = true;
+          } else {
+            record.codes[item.code] = true;
+          }
+        }
+      });
+      MICRONUTRIENT_SUPPLEMENTS.forEach(s => { record.supplements[s.key] = true; });
+      saveStoredDatabase();
+      renderCompleteApp();
+      showToast('All Daily Shift Milestones Completed!', 'check-check');
+    }
+
+    /* ----------------------------------------------------
+       WORKOUT ENGINE & EXERCISE CHECKLIST
+    ---------------------------------------------------- */
+    function renderWorkoutSection(record) {
+      const splitSelector = document.getElementById('workout-split-selector');
+      splitSelector.value = record.splitKey || 'Day A';
+
+      const template = WORKOUT_SCHEDULE[record.splitKey] || WORKOUT_SCHEDULE['Day A'];
+      document.getElementById('workout-box-title').innerText = template.name;
+      document.getElementById('primer-description').innerText = template.primer;
+
+      const movesContainer = document.getElementById('workout-moves-container');
+      movesContainer.innerHTML = '';
+
+      const moves = record.workoutMoves || [];
+      const completedCount = moves.filter(m => m.done).length;
+      document.getElementById('workout-completion-text').innerText = `${completedCount} of ${moves.length} completed`;
+
+      moves.forEach((move, idx) => {
+        const item = document.createElement('div');
+        item.className = `p-3 rounded-xl border transition flex items-start justify-between gap-3 ${
+          move.done ? 'bg-arc-500/10 border-arc-500/30' : 'bg-[#151f30] border-slate-800'
+        }`;
+
+        item.innerHTML = `
+          <div class="flex items-start gap-2.5">
+            <button onclick="toggleWorkoutMove(${idx})" class="mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition ${
+              move.done ? 'bg-arc-500 border-arc-500 text-slate-950 font-bold' : 'border-slate-600 hover:border-slate-400'
+            }">
+              ${move.done ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
+            </button>
+            <div>
+              <div class="text-xs font-bold ${move.done ? 'line-through text-slate-400' : 'text-white'}">
+                ${escapeHtml(move.name)}
+              </div>
+              <div class="text-[11px] text-slate-400 mt-0.5 flex flex-wrap items-center gap-1.5">
+                <span class="text-arc-400 font-semibold">${move.sets} sets × ${move.reps}</span>
+                <span>•</span>
+                <span class="italic text-slate-400">${escapeHtml(move.cue)}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <input type="text" placeholder="kg/notes" value="${escapeHtml(move.loggedWeight || '')}" onchange="saveMoveWeight(${idx}, this.value)" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none focus:border-arc-500">
+          </div>
+        `;
+
+        movesContainer.appendChild(item);
+      });
+    }
+
+    function toggleWorkoutMove(idx) {
+      const record = getOrInitDateRecord(currentDateStr);
+      record.workoutMoves[idx].done = !record.workoutMoves[idx].done;
+      saveStoredDatabase();
+      renderCompleteApp();
+    }
+
+    function saveMoveWeight(idx, val) {
+      const record = getOrInitDateRecord(currentDateStr);
+      record.workoutMoves[idx].loggedWeight = val;
+      saveStoredDatabase();
+      showToast('Movement Load Saved');
+    }
+
+    function markCurrentWorkoutAllDone() {
+      const record = getOrInitDateRecord(currentDateStr);
+      record.workoutMoves.forEach(m => m.done = true);
+      saveStoredDatabase();
+      renderCompleteApp();
+      showToast('Routine Marked Complete!', 'award');
+    }
+
+    /* ----------------------------------------------------
+       WATER, SCALE & CHART VISUALIZATIONS
+    ---------------------------------------------------- */
+    function addWaterMl(amount) {
+      const record = getOrInitDateRecord(currentDateStr);
+      record.waterMl = (record.waterMl || 0) + amount;
+      saveStoredDatabase();
+      renderCompleteApp();
+      showToast(`+${amount} ml Water Logged`);
+    }
+
+    function logScaleWeight() {
+      const val = parseFloat(document.getElementById('scale-weight-input').value);
+      const record = getOrInitDateRecord(currentDateStr);
+      record.scaleWeight = isNaN(val) ? '' : val;
+      saveStoredDatabase();
+      renderCompleteApp();
+      showToast(`Logged 3:45 AM Scale: ${val} kg`);
+    }
+
+    function renderWeightTrend() {
+      const labels = [];
+      const weights = [];
+      const baseDate = new Date(currentDateStr);
+
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date(baseDate);
+        d.setDate(d.getDate() - i);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const k = `${y}-${m}-${day}`;
+        labels.push(d.toLocaleDateString(undefined, { weekday: 'short', month: 'numeric', day: 'numeric' }));
+        weights.push(appDatabase[k]?.scaleWeight ? Number(appDatabase[k].scaleWeight) : null);
+      }
+
+      const valid = weights.filter(w => w !== null);
+      const trendEl = document.getElementById('weight-trend-metric');
+      if (valid.length >= 2) {
+        const delta = (valid[valid.length - 1] - valid[0]).toFixed(1);
+        if (delta < 0) trendEl.innerText = `${delta} kg change (Fat loss on track)`;
+        else trendEl.innerText = `+${delta} kg trend`;
+      } else {
+        trendEl.innerText = 'Baseline: 86.6 kg';
+      }
+
+      const ctx = document.getElementById('weightCurveCanvas').getContext('2d');
+      if (weightChart) weightChart.destroy();
+
+      weightChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Weight (kg)',
+            data: weights,
+            spanGaps: true,
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.15)',
+            borderWidth: 2.5,
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#34d399',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.parsed.y} kg`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#64748b', font: { size: 9 } }
+            },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#64748b', font: { size: 9 } }
+            }
+          }
+        }
+      });
+    }
+
+    /* ----------------------------------------------------
+       BACKUP & DATA MANAGEMENT
+    ---------------------------------------------------- */
+    function downloadBackupJson() {
+      const payload = {
+        blueprint: 'THE 90-DAY WINTER ARC BLUEPRINT',
+        exportedAt: new Date().toISOString(),
+        logs: appDatabase
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `winter_arc_90day_backup_${currentDateStr}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function copyRawJson() {
+      const payload = {
+        blueprint: 'THE 90-DAY WINTER ARC BLUEPRINT',
+        exportedAt: new Date().toISOString(),
+        logs: appDatabase
+      };
+      const dummy = document.createElement('textarea');
+      dummy.value = JSON.stringify(payload);
+      document.body.appendChild(dummy);
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      showToast('Raw JSON Copied');
+    }
+
+    function restoreBackupJson() {
+      const input = document.getElementById('import-json-area').value.trim();
+      if (!input) {
+        showToast('Please paste valid JSON data', 'alert-circle');
+        return;
+      }
+      try {
+        const parsed = JSON.parse(input);
+        if (parsed.logs) {
+          appDatabase = parsed.logs;
+          saveStoredDatabase();
+          closeModal('backup-modal');
+          renderCompleteApp();
+          showToast('Blueprint logs restored successfully!', 'check-check');
+        } else {
+          showToast('Invalid backup file schema', 'alert-circle');
+        }
+      } catch (err) {
+        showToast('JSON parse error', 'alert-circle');
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    /* ----------------------------------------------------
+       INITIALIZATION
+    ---------------------------------------------------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Date Picker handler
+      const datePicker = document.getElementById('date-picker');
+      datePicker.value = currentDateStr;
+      datePicker.addEventListener('change', (e) => {
+        if (e.target.value) {
+          currentDateStr = e.target.value;
+          renderCompleteApp();
+        }
+      });
+
+      document.getElementById('prev-date-btn').addEventListener('click', () => {
+        const [y, m, d] = currentDateStr.split('-');
+        const dt = new Date(y, m - 1, d);
+        dt.setDate(dt.getDate() - 1);
+        currentDateStr = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+        renderCompleteApp();
+      });
+
+      document.getElementById('next-date-btn').addEventListener('click', () => {
+        const [y, m, d] = currentDateStr.split('-');
+        const dt = new Date(y, m - 1, d);
+        dt.setDate(dt.getDate() + 1);
+        currentDateStr = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+        renderCompleteApp();
+      });
+
+      document.getElementById('today-btn').addEventListener('click', () => {
+        currentDateStr = getTodayString();
+        renderCompleteApp();
+      });
+
+      // Split Selector override
+      document.getElementById('workout-split-selector').addEventListener('change', (e) => {
+        const selected = e.target.value;
+        const record = getOrInitDateRecord(currentDateStr);
+        record.splitKey = selected;
+        const template = WORKOUT_SCHEDULE[selected];
+        record.workoutMoves = template.moves.map(m => ({ ...m, done: false, loggedWeight: '' }));
+        saveStoredDatabase();
+        renderCompleteApp();
+        showToast(`Loaded ${selected}`);
+      });
+
+      renderCompleteApp();
+    });
+  </script>
+</body>
+</html>
