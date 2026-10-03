@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-  <!-- PWA Web Manifest (Inline) -->
-<link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22Winter%20Arc%20Tracker%22%2C%22short_name%22%3A%22WinterArc%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23090d16%22%2C%22theme_color%22%3A%22%23090d16%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F2964%2F2964514.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>THE 90-DAY WINTER ARC BLUEPRINT (OCTOBER – DECEMBER)</title>
-  
+
+  <!-- PWA & Mobile Web App Manifest (Inline Base64) -->
+  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22Winter%20Arc%20Tracker%22%2C%22short_name%22%3A%22WinterArc%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230b1120%22%2C%22theme_color%22%3A%22%230b1120%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F2964%2F2964514.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0b1120">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js CDN -->
@@ -25,7 +26,6 @@
         extend: {
           colors: {
             arc: {
-              50: '#ecfdf5',
               400: '#34d399',
               500: '#10b981',
               600: '#059669',
@@ -38,8 +38,8 @@
             }
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'monospace']
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace']
           }
         }
       }
@@ -48,34 +48,23 @@
 
   <style>
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-track { background: #0b1120; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
     .glow-border {
-      box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.2);
-    }
-    .badge-code {
-      font-feature-settings: "tnum";
-      font-variant-numeric: tabular-nums;
-    }
-    .tab-active {
-      background: #10b981 !important;
-      color: #0f172a !important;
-      font-weight: 700;
-    }
-    input[type="checkbox"] {
-      cursor: pointer;
+      box-shadow: 0 0 15px -3px rgba(16, 185, 129, 0.15);
     }
   </style>
 </head>
 
 <body class="bg-[#0b1120] text-slate-100 font-sans min-h-screen antialiased selection:bg-arc-500 selection:text-slate-950 pb-20">
 
+  <!-- TOP HEADER -->
   <header class="sticky top-0 z-40 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
       
-      <!-- Brand & Mission Header -->
+      <!-- Brand & Title -->
       <div class="flex items-center justify-between w-full md:w-auto">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-arc-600 via-arc-500 to-arc-accent p-[1px] shadow-lg">
@@ -121,7 +110,7 @@
         </button>
       </div>
 
-      <!-- Action Buttons Desktop -->
+      <!-- Desktop Action Buttons -->
       <div class="hidden md:flex items-center gap-2.5">
         <button onclick="openModal('audit-modal')" class="flex items-center gap-1.5 bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 px-3 py-1.5 rounded-xl text-sky-400 text-xs font-bold transition">
           <i data-lucide="target" class="w-4 h-4"></i>
@@ -137,6 +126,7 @@
 
   <main class="max-w-7xl mx-auto px-4 lg:px-8 pt-6 space-y-6">
 
+    <!-- DAILY CODE STRING CARD -->
     <section class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 shadow-xl glow-border">
       <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         
@@ -146,7 +136,7 @@
             <span class="text-xs text-slate-400">Earned nightly at <strong class="text-slate-200 font-mono">3:45 AM</strong></span>
           </div>
           <h2 class="text-lg sm:text-xl font-black text-white">Daily Code String: <span id="string-complete-pct" class="text-arc-400">0%</span> Complete</h2>
-          <p class="text-xs text-slate-400">Check off all 7 core nutritional anchors to unlock your daily winter arc proof string.</p>
+          <p class="text-xs text-slate-400">Check off all 7 nutritional milestones to unlock your verifiable winter arc tracking string.</p>
         </div>
 
         <!-- Tracking String Badges -->
@@ -164,13 +154,13 @@
             <span>[ E ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">5 Eggs</span>
           </div>
           <div id="code-badge-R" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
-            <span>[ R ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Paneer/Rice</span>
+            <span id="badge-r-text">[ R ]</span> <span id="badge-r-sub" class="hidden sm:inline text-[10px] font-sans font-normal">Dinner</span>
           </div>
           <div id="code-badge-C" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
             <span>[ C ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Cothas</span>
           </div>
           <div id="code-badge-L" class="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 text-slate-500 border border-slate-700/60 transition-all flex items-center gap-1">
-            <span>[ L ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Amul Lassi</span>
+            <span>[ L ]</span> <span class="hidden sm:inline text-[10px] font-sans font-normal">Lassi</span>
           </div>
 
           <button onclick="copyGeneratedString()" class="ml-auto lg:ml-2 px-3 py-1.5 rounded-lg bg-arc-500 hover:bg-arc-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition">
@@ -182,6 +172,7 @@
       </div>
     </section>
 
+    <!-- MACRONUTRIENT & WATER CARDS -->
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       
       <!-- Energy Deficit Card -->
@@ -191,8 +182,8 @@
           <span>Target ~500 kcal Deficit</span>
         </div>
         <div class="text-2xl font-black text-white font-mono">~1,780 <span class="text-xs font-sans font-normal text-slate-400">kcal</span></div>
-        <div class="mt-2 text-xs text-slate-400">
-          Pure fat oxidation threshold designed to preserve lean muscle at 86.6 kg without CNS fatigue.
+        <div class="mt-2 text-xs text-slate-400 leading-tight">
+          Fat oxidation threshold configured to preserve muscle at 86.6 kg without CNS fatigue.
         </div>
       </div>
 
@@ -203,8 +194,8 @@
           <span>~1.5g / kg</span>
         </div>
         <div class="text-2xl font-black text-white font-mono">125g – 130g</div>
-        <div class="mt-2 text-xs text-slate-400">
-          Complete amino acids via 5 eggs, whey, high-protein paneer / soya chunks, and protein oats.
+        <div class="mt-2 text-xs text-slate-400 leading-tight">
+          5 whole eggs, whey protein, high-protein paneer or soya chunks, and protein oats.
         </div>
       </div>
 
@@ -217,12 +208,12 @@
         <div class="text-base font-black text-white font-mono">
           <span class="text-amber-400">160–180g C</span> • <span class="text-sky-400">45–50g F</span>
         </div>
-        <div class="mt-2 text-xs text-slate-400">
-          Beta-glucans, rice, beetroot pulp, egg lipids & seed PUFAs for stable corporate shift cognition.
+        <div class="mt-2 text-xs text-slate-400 leading-tight">
+          Beta-glucans, rice, beetroot pulp, egg yolk lipids, and seed polyunsaturated fatty acids.
         </div>
       </div>
 
-      <!-- Water & Nightly Hydration -->
+      <!-- Water Hydration Card -->
       <div class="bg-[#1e293b] p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
@@ -241,6 +232,7 @@
 
     </section>
 
+    <!-- MICRONUTRIENT ISOLATION PROTOCOL -->
     <section class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-3">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
         <div class="flex items-center gap-2.5">
@@ -249,20 +241,21 @@
           </div>
           <div>
             <h3 class="text-sm font-bold text-white">Micronutrient & Supplement Absorption Protocol</h3>
-            <p class="text-xs text-slate-400">Biochemically isolated timing to eliminate absorption competition</p>
+            <p class="text-xs text-slate-400">Strictly isolated timing to eliminate absorption competition</p>
           </div>
         </div>
-        <span class="text-xs font-semibold text-slate-400" id="supplements-status-count">0 / 5 Active</span>
+        <span class="text-xs font-semibold text-slate-400" id="supplements-status-count">0 / 5 Logged</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3" id="supplements-container">
-        <!-- Injected via JS -->
+        <!-- Injected via JavaScript -->
       </div>
     </section>
 
-    <!-- MAIN GRID: DAILY TIMELINE & OPERATIONAL MILESTONES (7 Cols) + 4-WEEK WORKOUT ENGINE & WEIGHT (5 Cols) -->
+    <!-- MAIN TWO-COLUMN DASHBOARD -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
       
+      <!-- LEFT COLUMN: TIMELINE & OPERATIONAL MILESTONES (7 Cols) -->
       <section class="lg:col-span-7 bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4 shadow-lg">
         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
           <div class="flex items-center gap-2.5">
@@ -277,16 +270,16 @@
           <button onclick="markAllTimelineComplete()" class="text-xs font-semibold text-arc-400 hover:text-arc-300">Check All</button>
         </div>
 
-        <!-- Interactive Milestones List -->
+        <!-- Dynamic Timeline Item Rows -->
         <div class="space-y-3" id="timeline-list-container">
-          <!-- Timeline milestones injected dynamically -->
+          <!-- Timeline rows injected via JavaScript -->
         </div>
       </section>
 
-      <!-- RIGHT COLUMN: 4-WEEK STRUCTURAL REBUILD & OFFICIAL WEIGHT SCALE -->
+      <!-- RIGHT COLUMN: SPINE-SAFE REBUILD & 3:45 AM SCALE (5 Cols) -->
       <section class="lg:col-span-5 space-y-6">
 
-        <!-- WORKOUT REBUILD PROTOCOL -->
+        <!-- WORKOUT BOX -->
         <div class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4 shadow-lg">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-3 gap-2">
             <div class="flex items-center gap-2.5">
@@ -295,11 +288,11 @@
               </div>
               <div>
                 <h3 class="text-sm font-bold text-white" id="workout-box-title">Spine-Safe Structural Rebuild</h3>
-                <p class="text-xs text-slate-400">11:30 AM Window • Zero Spinal Compression</p>
+                <p class="text-xs text-slate-400">11:30 AM Anchor • Zero Spinal Compression</p>
               </div>
             </div>
 
-            <!-- Manual Override Select -->
+            <!-- Split Selector Dropdown -->
             <select id="workout-split-selector" class="bg-[#151f30] border border-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-arc-500">
               <option value="Day A">Mon: Day A (Posture & Anchor)</option>
               <option value="LISS Tue">Tue: 45m Brisk LISS Walk</option>
@@ -318,11 +311,11 @@
               <span id="primer-title">Dynamic Primer (5 min)</span>
             </div>
             <p id="primer-description" class="text-slate-300 mt-1 leading-relaxed">
-              Cat-Cow (10 reps) + Bird Dogs (3 sets × 8 reps/side with 2s glute squeeze at top).
+              Cat-Cow (10 reps) + Bird Dogs (3 sets × 8 reps/side with 2-sec glute hold).
             </p>
           </div>
 
-          <!-- Workout Movement Checklist -->
+          <!-- Movement Checklist -->
           <div class="space-y-2.5" id="workout-moves-container">
             <!-- Injected by JavaScript -->
           </div>
@@ -333,7 +326,7 @@
           </div>
         </div>
 
-        <!-- OFFICIAL 3:45 AM WEIGHT SCALE & CHART -->
+        <!-- 3:45 AM OFFICIAL SCALE WEIGH-IN -->
         <div class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4 shadow-lg">
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <div class="flex items-center gap-2.5">
@@ -353,11 +346,11 @@
             <button onclick="logScaleWeight()" class="bg-arc-500 hover:bg-arc-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shrink-0">Log Weight</button>
           </div>
 
-          <!-- Weight Progression Chart -->
+          <!-- Weight Curve Chart -->
           <div class="pt-2">
             <div class="flex items-center justify-between mb-1.5 text-xs text-slate-400">
-              <span>7-Day Progression Curve</span>
-              <span id="weight-trend-metric" class="font-semibold text-white">Starting: 86.6 kg</span>
+              <span>7-Day Weight Curve</span>
+              <span id="weight-trend-metric" class="font-semibold text-white">Baseline: 86.6 kg</span>
             </div>
             <div class="h-40 w-full relative">
               <canvas id="weightCurveCanvas"></canvas>
@@ -371,7 +364,7 @@
 
   </main>
 
-  <!-- MODAL: 4-WEEK MILESTONE AUDIT (OCTOBER 31) -->
+  <!-- MODAL: OCTOBER 31 MILESTONE AUDIT -->
   <div id="audit-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 hidden">
     <div class="bg-[#1e293b] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-700 p-6 shadow-2xl relative space-y-5">
       
@@ -389,38 +382,33 @@
       </div>
 
       <div class="space-y-4 text-xs text-slate-300 leading-relaxed">
-        
-        <!-- Criterion 1: Weight -->
         <div class="p-4 rounded-xl bg-[#151f30] border border-slate-800 flex items-start gap-3">
           <div class="p-2 rounded-lg bg-arc-500/10 text-arc-400 shrink-0 font-bold font-mono">01</div>
           <div>
             <h4 class="font-bold text-white text-sm">Scale Goal: Sub-83.5 kg</h4>
-            <p class="text-slate-400 mt-1">Starting from 86.6 kg, shedding 3.1+ kg of glycogen inflammation, visceral water, and active adipose tissue under the ~1,780 kcal energy deficit.</p>
+            <p class="text-slate-400 mt-1">Starting from 86.6 kg, shedding 3.1+ kg of glycogen inflammation, visceral water, and adipose tissue under the ~1,780 kcal energy deficit.</p>
           </div>
         </div>
 
-        <!-- Criterion 2: Lumbar Spine -->
         <div class="p-4 rounded-xl bg-[#151f30] border border-slate-800 flex items-start gap-3">
           <div class="p-2 rounded-lg bg-amber-500/10 text-amber-400 shrink-0 font-bold font-mono">02</div>
           <div>
             <h4 class="font-bold text-white text-sm">Spine Health: 100% Desk Strain Resolution</h4>
-            <p class="text-slate-400 mt-1">Complete alleviation of lumbar tightness through Bird Dogs, Glute Bridges, dead hangs, and 4 days of purposeful Zone 2 walking.</p>
+            <p class="text-slate-400 mt-1">Complete alleviation of lower back tightness through Bird Dogs, Glute Bridges, dead hangs, and 4 dedicated days of Zone 2 brisk walking.</p>
           </div>
         </div>
 
-        <!-- Criterion 3: Relative Bodyweight Strength -->
         <div class="p-4 rounded-xl bg-[#151f30] border border-slate-800 flex items-start gap-3">
           <div class="p-2 rounded-lg bg-sky-500/10 text-sky-400 shrink-0 font-bold font-mono">03</div>
           <div>
-            <h4 class="font-bold text-white text-sm">Relative Strength Benchmark</h4>
-            <p class="text-slate-400 mt-1">Progression from 10–12 pushups & 1 shaky pull-up to <strong class="text-white">18–20 uninterrupted pushups</strong> and <strong class="text-white">3–4 strict unassisted pull-ups</strong> as power-to-weight ratio increases.</p>
+            <h4 class="font-bold text-white text-sm">Relative Strength Calibration</h4>
+            <p class="text-slate-400 mt-1">Advancing from 10–12 pushups & 1 shaky pull-up to <strong class="text-white">18–20 uninterrupted pushups</strong> and <strong class="text-white">3–4 strict unassisted pull-ups</strong> as power-to-weight ratio increases.</p>
           </div>
         </div>
 
         <div class="p-3 rounded-xl bg-arc-500/10 border border-arc-500/30 text-arc-300">
-          <strong>Next Phase Unlock:</strong> Meeting all three criteria by October 31 unlocks the 4-Day Upper/Lower Strength Hypertrophy Split for November & December.
+          <strong>Next Phase:</strong> Satisfying all three criteria by October 31 unlocks the 4-Day Upper/Lower Strength Hypertrophy Split for November & December.
         </div>
-
       </div>
 
       <div class="flex justify-end pt-2">
@@ -443,14 +431,14 @@
         </button>
       </div>
 
-      <p class="text-slate-400">Save your full 90-day winter arc checklist, daily string records, and scale weights to a local JSON file or transfer across devices.</p>
+      <p class="text-slate-400 leading-relaxed">Save your full 90-day checklist, daily string records, and scale weights to a local JSON file or transfer across devices.</p>
 
       <div class="grid grid-cols-2 gap-2">
         <button onclick="downloadBackupJson()" class="py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-white font-bold flex items-center justify-center gap-1.5 transition">
           <i data-lucide="download" class="w-3.5 h-3.5"></i> Export .JSON
         </button>
         <button onclick="copyRawJson()" class="py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-white font-bold flex items-center justify-center gap-1.5 transition">
-          <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy to Clipboard
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy JSON
         </button>
       </div>
 
@@ -466,14 +454,15 @@
     </div>
   </div>
 
-  <!-- TOAST NOTIFIER -->
+  <!-- TOAST NOTIFICATION -->
   <div id="toast-notify" class="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-[#151f30] border border-slate-700 shadow-2xl px-4 py-3 rounded-xl text-xs font-bold text-white transition-all transform translate-y-24 opacity-0 pointer-events-none">
     <i id="toast-icon" data-lucide="check-circle" class="w-4 h-4 text-arc-400"></i>
     <span id="toast-text">Update saved</span>
   </div>
 
+  <!-- JAVASCRIPT LOGIC ENGINE -->
   <script>
-    const STORAGE_KEY = 'winter_arc_90day_blueprint_v1';
+    const STORAGE_KEY = 'winter_arc_90day_blueprint_v2';
 
     // The Complete 10:30 AM to 3:45 AM Shift Protocol Timeline
     const TIMELINE_BLUEPRINT = [
@@ -483,8 +472,7 @@
         title: 'Wake-Up & Pre-Workout Primer',
         intake: 'ABC Shot: 2 Amlas + ½ Beetroot + ½ Carrot + 1" Ginger + 10–12 Curry leaves (blended with pulp) + 1.5 scoops Watermelon Creatine + 1 tsp Moringa',
         target: 'Dietary Nitrates, ~800mg Vitamin C, 5g Creatine, Electrolytes',
-        code: 'J',
-        codeName: 'ABC Shot + Creatine + Moringa'
+        code: 'J'
       },
       {
         id: 't-1100',
@@ -508,8 +496,7 @@
         title: 'Post-Workout Anabolic Anchor',
         intake: '5 Whole Boiled Eggs + Vitamin D3 (2,000 IU) + Omega-3 Flaxseed Oil Capsule',
         target: '30g Protein, Choline, Fat-soluble vitamin transport',
-        code: 'E',
-        codeName: '5 Whole Boiled Eggs'
+        code: 'E'
       },
       {
         id: 't-1400',
@@ -517,8 +504,7 @@
         title: 'High-Protein Satiety Anchor',
         intake: '80g High-Protein Oats + 100g Curd (thinned with water) + 1 Scoop Protein Powder + Custom Seed Mix',
         target: '~49.5g Protein, Beta-glucans, Prebiotics, Healthy fats',
-        code: 'O_S', // Represents both O and S
-        codeName: 'Protein Oats (O) & Seed Mix (S)'
+        code: 'O_S' // Handles both O & S
       },
       {
         id: 't-1630',
@@ -533,7 +519,7 @@
         time: '6:00 PM',
         title: 'Shift Starts',
         intake: 'Desk arrival (sustained fullness from 2:00 PM meal)',
-        target: 'Cognitive focus',
+        target: 'Cognitive focus & metabolic satiety',
         code: null
       },
       {
@@ -542,17 +528,15 @@
         title: 'Office Snack Break',
         intake: '2–3 Shots Black Cothas Coffee (Zero sugar, zero milk) + Vitamin B12 + 500ml Water',
         target: 'Adenosine blockade, cellular energy, 8.5h sleep buffer',
-        code: 'C',
-        codeName: 'Black Cothas Coffee (before 8:30 PM)'
+        code: 'C'
       },
       {
         id: 't-2100',
         time: '9:00 PM – 9:30 PM',
         title: 'Office Dinner Break',
-        intake: '100g Milky Mist High-Protein Paneer (or 50g Soya Chunks, double-soaked/squeezed/minced) + Cooked Rice + Mixed Veggies + Hing & Jeera',
+        isDinnerSelector: true,
         target: '25g Protein, Zero-bloat gut comfort',
-        code: 'R',
-        codeName: 'Paneer / Soya Rice Tiffin'
+        code: 'R'
       },
       {
         id: 't-0000',
@@ -560,8 +544,7 @@
         title: 'Midnight Hunger Shield',
         intake: '1 Pack Amul Protein Lassi (200ml)',
         target: '14g Slow-release dairy protein, craving suppression',
-        code: 'L',
-        codeName: 'Midnight Amul Protein Lassi'
+        code: 'L'
       },
       {
         id: 't-0030',
@@ -581,7 +564,7 @@
       }
     ];
 
-    // Micronutrient & Supplement protocol isolation definitions
+    // Micronutrient Isolation Definitions
     const MICRONUTRIENT_SUPPLEMENTS = [
       { key: 'supp_vitc', label: 'Vitamin C & Nitrates', time: '10:30 AM', desc: '2 Amlas (~800mg Vit C) + Beetroot in ABC shot' },
       { key: 'supp_d3', label: 'Vitamin D3 & Omega-3', time: '1:00 PM', desc: 'Fat-soluble, taken with whole egg yolks' },
@@ -590,7 +573,7 @@
       { key: 'supp_mag', label: 'Magnesium Capsule', time: '3:45 AM', desc: 'Pre-sleep CNS relaxation & slow-wave recovery' }
     ];
 
-    // 4-Week Structural Rebuild Workout Schedule
+    // 4-Week Spine-Safe Rebuild Programs
     const WORKOUT_SCHEDULE = {
       'Day A': {
         name: 'Day A (Monday): Posture & Upper Anchor',
@@ -674,7 +657,7 @@
     }
 
     function loadStoredDatabase() {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('winter_arc_90day_blueprint_v1');
       if (raw) {
         try { return JSON.parse(raw); } catch (e) { console.error('Parse error', e); }
       }
@@ -708,18 +691,13 @@
         const dayIdx = getDayIndex(dateStr);
         const splitKey = getDefaultSplitKeyForDay(dayIdx);
 
-        // Build default movements
         const template = WORKOUT_SCHEDULE[splitKey];
         const initialMoves = template.moves.map(m => ({ ...m, done: false, loggedWeight: '' }));
 
-        // Initial codes checked map: J, S, O, E, R, C, L
         const initialCodes = { J: false, S: false, O: false, E: false, R: false, C: false, L: false };
-
-        // Initial timeline check map
         const initialTimeline = {};
         TIMELINE_BLUEPRINT.forEach(item => { initialTimeline[item.id] = false; });
 
-        // Initial supplements map
         const initialSupps = {};
         MICRONUTRIENT_SUPPLEMENTS.forEach(s => { initialSupps[s.key] = false; });
 
@@ -727,6 +705,7 @@
           splitKey: splitKey,
           timeline: initialTimeline,
           codes: initialCodes,
+          dinnerChoice: 'paneer', // 'paneer' or 'soya'
           supplements: initialSupps,
           workoutMoves: initialMoves,
           waterMl: 0,
@@ -734,6 +713,12 @@
         };
         saveStoredDatabase();
       }
+
+      // Backwards compatibility safety check
+      if (!appDatabase[dateStr].dinnerChoice) {
+        appDatabase[dateStr].dinnerChoice = 'paneer';
+      }
+
       return appDatabase[dateStr];
     }
 
@@ -768,29 +753,20 @@
       const dayIdx = getDayIndex(currentDateStr);
       const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-      // Synchronize date controls
       document.getElementById('date-picker').value = currentDateStr;
       document.getElementById('day-pill').innerText = dayNames[dayIdx];
 
-      // Render Daily Tracking String & Badges
       renderTrackingStringBadges(record);
 
-      // Render Water Tracker
       const waterMl = record.waterMl || 0;
       document.getElementById('water-display-count').innerText = `${(waterMl / 1000).toFixed(2)} / 2.5 L`;
       const waterPct = Math.min(Math.round((waterMl / 2500) * 100), 100);
       document.getElementById('water-progress-bar').style.width = `${waterPct}%`;
 
-      // Render Micronutrient Supplements
       renderSupplementsList(record);
-
-      // Render Timeline
       renderTimelineMilestones(record);
-
-      // Render Workout Program
       renderWorkoutSection(record);
 
-      // Scale weight input & chart
       document.getElementById('scale-weight-input').value = record.scaleWeight || '';
       renderWeightTrend();
 
@@ -809,6 +785,11 @@
         const badge = document.getElementById(`code-badge-${code}`);
         const isDone = Boolean(record.codes[code]);
 
+        if (code === 'R') {
+          const choiceLabel = record.dinnerChoice === 'soya' ? 'Soya' : 'Paneer';
+          document.getElementById('badge-r-sub').innerText = choiceLabel;
+        }
+
         if (isDone) {
           earnedCount++;
           badge.className = 'px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-arc-500/20 text-arc-400 border border-arc-500/50 shadow-sm transition-all flex items-center gap-1';
@@ -825,10 +806,17 @@
 
     function copyGeneratedString() {
       const record = getOrInitDateRecord(currentDateStr);
-      const parts = CODE_ORDER.map(code => record.codes[code] ? code : '—');
+      const parts = CODE_ORDER.map(code => {
+        if (!record.codes[code]) return '—';
+        if (code === 'R') {
+          return record.dinnerChoice === 'soya' ? 'R (Soya)' : 'R (Paneer)';
+        }
+        return code;
+      });
+
       const stringFormat = `[ ${parts.join(' - ')} ]`;
       const pct = Math.round((CODE_ORDER.filter(c => record.codes[c]).length / CODE_ORDER.length) * 100);
-      const textToCopy = `WINTER ARC DAILY PROOF (${currentDateStr}): ${stringFormat} (${pct}% Achieved) | Scale Weight: ${record.scaleWeight ? record.scaleWeight + ' kg' : 'Pending 3:45 AM'}`;
+      const textToCopy = `WINTER ARC DAILY PROOF (${currentDateStr}): ${stringFormat} (${pct}% Achieved) | Dinner: ${record.dinnerChoice === 'soya' ? '50g Soya Chunks' : '100g High-Protein Paneer'} | Scale Weight: ${record.scaleWeight ? record.scaleWeight + ' kg' : 'Pending 3:45 AM'}`;
 
       const dummy = document.createElement('textarea');
       dummy.value = textToCopy;
@@ -841,7 +829,7 @@
     }
 
     /* ----------------------------------------------------
-       MICRONUTRIENT PROTOCOL LIST
+       MICRONUTRIENT SUPPLEMENTS LIST
     ---------------------------------------------------- */
     function renderSupplementsList(record) {
       const container = document.getElementById('supplements-container');
@@ -882,8 +870,16 @@
     }
 
     /* ----------------------------------------------------
-       TIMELINE & MILESTONE ENGINE
+       TIMELINE & PANEER / SOYA TOGGLE
     ---------------------------------------------------- */
+    function setDinnerChoice(choice) {
+      const record = getOrInitDateRecord(currentDateStr);
+      record.dinnerChoice = choice;
+      saveStoredDatabase();
+      renderCompleteApp();
+      showToast(`Dinner logged as: ${choice === 'soya' ? '50g Soya Chunks' : '100g High-Protein Paneer'}`);
+    }
+
     function renderTimelineMilestones(record) {
       const container = document.getElementById('timeline-list-container');
       container.innerHTML = '';
@@ -907,6 +903,12 @@
                 <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${sDone ? 'bg-arc-500 text-slate-950' : 'bg-slate-800 text-purple-400 border border-purple-500/30'}">[ S ]</span>
               </div>
             `;
+          } else if (item.code === 'R') {
+            const hasCode = record.codes[item.code];
+            const choiceLabel = record.dinnerChoice === 'soya' ? 'Soya' : 'Paneer';
+            codeBadgeHtml = `
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${hasCode ? 'bg-arc-500 text-slate-950' : 'bg-slate-800 text-arc-400 border border-arc-500/30'}">[ R: ${choiceLabel} ]</span>
+            `;
           } else {
             const hasCode = record.codes[item.code];
             codeBadgeHtml = `
@@ -915,13 +917,49 @@
           }
         }
 
-        card.innerHTML = `
-          <div class="flex items-start gap-3">
-            <button onclick="toggleTimelineItem('${item.id}', '${item.code}')" class="mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition ${
-              isDone ? 'bg-arc-500 border-arc-500 text-slate-950' : 'border-slate-600 hover:border-slate-400'
-            }">
-              ${isDone ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
-            </button>
+        // Special render for 9:00 PM Dinner with Paneer vs Soya toggle
+        let bodyContentHtml = '';
+        if (item.isDinnerSelector) {
+          const isPaneer = (record.dinnerChoice || 'paneer') === 'paneer';
+          bodyContentHtml = `
+            <div class="space-y-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-mono text-xs font-bold text-arc-accent">${item.time}</span>
+                <span class="text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-white'}">${escapeHtml(item.title)}</span>
+                ${codeBadgeHtml}
+              </div>
+
+              <!-- Interactive Paneer vs Soya Selector -->
+              <div class="flex items-center gap-1.5 p-1 bg-slate-900 rounded-xl border border-slate-700 w-fit">
+                <button onclick="setDinnerChoice('paneer')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+                  isPaneer ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm' : 'text-slate-400 hover:text-white'
+                }">
+                  <i data-lucide="${isPaneer ? 'check-circle' : 'circle'}" class="w-3.5 h-3.5 ${isPaneer ? 'text-amber-400' : 'text-slate-500'}"></i>
+                  <span>100g Paneer</span>
+                </button>
+                <button onclick="setDinnerChoice('soya')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+                  !isPaneer ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm' : 'text-slate-400 hover:text-white'
+                }">
+                  <i data-lucide="${!isPaneer ? 'check-circle' : 'circle'}" class="w-3.5 h-3.5 ${!isPaneer ? 'text-emerald-400' : 'text-slate-500'}"></i>
+                  <span>50g Soya Chunks</span>
+                </button>
+              </div>
+
+              <div class="text-xs text-slate-300 leading-snug">
+                ${isPaneer 
+                  ? '<strong>100g Milky Mist High-Protein Paneer</strong> + Cooked Rice + Mixed Veggies + Hing & Jeera (25g Protein, slow-release casein & healthy dairy fats)' 
+                  : '<strong>50g Soya Chunks</strong> (double-soaked, squeezed & minced) + Cooked Rice + Mixed Veggies + Hing & Jeera (26g Protein, ultra-lean amino acids)'
+                }
+              </div>
+
+              <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-3 h-3 text-arc-400"></i>
+                <span>${isPaneer ? 'Zero-bloat gut comfort • Slower digestion' : 'Ultra-lean profile • Isoflavones & arginine'}</span>
+              </div>
+            </div>
+          `;
+        } else {
+          bodyContentHtml = `
             <div class="space-y-1">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="font-mono text-xs font-bold text-arc-accent">${item.time}</span>
@@ -934,6 +972,17 @@
                 <span>${escapeHtml(item.target)}</span>
               </div>
             </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-start gap-3">
+            <button onclick="toggleTimelineItem('${item.id}', '${item.code}')" class="mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition ${
+              isDone ? 'bg-arc-500 border-arc-500 text-slate-950 font-bold' : 'border-slate-600 hover:border-slate-400'
+            }">
+              ${isDone ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
+            </button>
+            ${bodyContentHtml}
           </div>
 
           <div class="sm:self-center shrink-0">
@@ -954,7 +1003,6 @@
       const newState = !record.timeline[itemId];
       record.timeline[itemId] = newState;
 
-      // Automatically sync daily codes
       if (itemCode) {
         if (itemCode === 'O_S') {
           record.codes.O = newState;
@@ -964,7 +1012,6 @@
         }
       }
 
-      // Auto-sync supplements
       if (itemId === 't-1030') record.supplements.supp_vitc = newState;
       if (itemId === 't-1300') record.supplements.supp_d3 = newState;
       if (itemId === 't-1630') record.supplements.supp_iron = newState;
@@ -992,7 +1039,7 @@
       MICRONUTRIENT_SUPPLEMENTS.forEach(s => { record.supplements[s.key] = true; });
       saveStoredDatabase();
       renderCompleteApp();
-      showToast('All Daily Shift Milestones Completed!', 'check-check');
+      showToast('All Daily Milestones Completed!', 'check-check');
     }
 
     /* ----------------------------------------------------
@@ -1229,7 +1276,6 @@
        INITIALIZATION
     ---------------------------------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
-      // Date Picker handler
       const datePicker = document.getElementById('date-picker');
       datePicker.value = currentDateStr;
       datePicker.addEventListener('change', (e) => {
@@ -1260,7 +1306,6 @@
         renderCompleteApp();
       });
 
-      // Split Selector override
       document.getElementById('workout-split-selector').addEventListener('change', (e) => {
         const selected = e.target.value;
         const record = getOrInitDateRecord(currentDateStr);
