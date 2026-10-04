@@ -33,6 +33,7 @@
               accent: '#38bdf8',
               amber: '#f59e0b',
               purple: '#a855f7',
+              rose: '#f43f5e',
               slate: '#0f172a',
               card: '#1e293b',
               inner: '#151f30'
@@ -173,7 +174,7 @@
       </div>
     </section>
 
-    <!-- MACRONUTRIENT & WATER CARDS -->
+    <!-- MACRONUTRIENT & WATER & STEPS CARDS -->
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       
       <!-- Energy Deficit Card -->
@@ -200,20 +201,6 @@
         </div>
       </div>
 
-      <!-- Carbs & Fats Card -->
-      <div class="bg-[#1e293b] p-4 rounded-2xl border border-slate-800">
-        <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-          <span class="font-bold uppercase tracking-wider text-amber-400">Carbs & Fats</span>
-          <span>Clean Sustained Fuel</span>
-        </div>
-        <div class="text-base font-black text-white font-mono">
-          <span class="text-amber-400">160–180g C</span> • <span class="text-sky-400">45–50g F</span>
-        </div>
-        <div class="mt-2 text-xs text-slate-400 leading-tight">
-          Beta-glucans, rice, beetroot pulp, egg yolk lipids, and seed polyunsaturated fatty acids.
-        </div>
-      </div>
-
       <!-- Water Hydration Card -->
       <div class="bg-[#1e293b] p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
         <div>
@@ -231,25 +218,45 @@
         </div>
       </div>
 
+      <!-- Daily Steps & LISS Card -->
+      <div class="bg-[#1e293b] p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+            <span class="font-bold uppercase tracking-wider text-emerald-400">Daily Steps</span>
+            <span class="font-mono text-white" id="steps-display-count">0 / 10,000</span>
+          </div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden mb-2">
+            <div id="steps-progress-bar" class="bg-emerald-400 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="addSteps(1000)" class="w-1/2 py-1 bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-300 border border-slate-700 rounded-lg text-xs font-semibold transition">+1,000</button>
+          <button onclick="addSteps(4500)" class="w-1/2 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-xs font-bold transition">+4.5k LISS</button>
+        </div>
+      </div>
+
     </section>
 
-    <!-- MICRONUTRIENT ISOLATION PROTOCOL -->
-    <section class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-3">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+    <!-- MASTER DAILY SUPPLEMENT & MEDICATION PROTOCOL -->
+    <section class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-3 gap-2">
         <div class="flex items-center gap-2.5">
           <div class="p-1.5 rounded-lg bg-arc-purple/10 text-arc-purple border border-arc-purple/20">
             <i data-lucide="pill" class="w-4 h-4"></i>
           </div>
           <div>
-            <h3 class="text-sm font-bold text-white">Micronutrient & Supplement Absorption Protocol</h3>
-            <p class="text-xs text-slate-400">Strictly isolated timing to eliminate absorption competition</p>
+            <h3 class="text-sm font-bold text-white">Master Daily Supplement & Medication Protocol</h3>
+            <p class="text-xs text-slate-400">Locked-in timing windows with isolated nutrient absorption mechanics</p>
           </div>
         </div>
-        <span class="text-xs font-semibold text-slate-400" id="supplements-status-count">0 / 5 Logged</span>
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-semibold text-slate-400" id="supplements-status-count">0 / 5 Locked</span>
+          <button onclick="markAllSupplementsComplete()" class="text-xs font-bold text-arc-400 hover:text-arc-300">Lock All</button>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3" id="supplements-container">
-        <!-- Injected via JavaScript -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3.5" id="supplements-container">
+        <!-- Injected dynamically via JavaScript -->
       </div>
     </section>
 
@@ -463,7 +470,56 @@
 
   <!-- JAVASCRIPT LOGIC ENGINE -->
   <script>
-    const STORAGE_KEY = 'winter_arc_90day_blueprint_v2';
+    const STORAGE_KEY = 'winter_arc_90day_blueprint_v3';
+
+    // The Locked-In Master Daily Supplement & Medication Protocol
+    const MASTER_SUPPLEMENT_PROTOCOL = [
+      {
+        key: 'supp_creatine_moringa',
+        name: 'Creatine & Moringa',
+        dose: '1.5 scoops (~5g) + 1 tsp Moringa',
+        time: '10:30 AM',
+        window: 'Wake-Up & Pre-Gym Primer',
+        rule: 'Blended into ABC juice pulp; saturates cellular phosphocreatine to power ATP for 11:30 AM lift.',
+        color: 'text-arc-400 bg-arc-500/10 border-arc-500/30'
+      },
+      {
+        key: 'supp_d3_omega_zinc',
+        name: 'D3 + Omega-3 + Zinc',
+        dose: 'D3 (2,000 IU) + Omega-3 Flax + Zinc Tablet',
+        time: '1:00 PM',
+        window: 'Post-Gym Anabolic Anchor',
+        rule: 'Egg yolk lipids maximize fat-soluble D3 and Omega-3 uptake; eggs buffer stomach against zinc nausea with zero calcium interference. Separated from Iron by 3.5h.',
+        color: 'text-amber-400 bg-amber-500/10 border-amber-500/30'
+      },
+      {
+        key: 'supp_iron_vitc',
+        name: 'Iron + Vitamin C Tablet',
+        dose: 'Iron Tablet + 100–500mg Ascorbic Acid',
+        time: '4:30 PM',
+        window: 'Pre-Commute Buffer',
+        rule: 'Taken with plain water. Pure ascorbic acid yields 2–3x non-heme absorption without dental enamel erosion. Strict buffer: 2.5h after curd and 2h before coffee.',
+        color: 'text-rose-400 bg-rose-500/10 border-rose-500/30'
+      },
+      {
+        key: 'supp_b12',
+        name: 'Vitamin B12 Methyl',
+        dose: '1 Sublingual / Tablet',
+        time: '6:30 PM',
+        window: 'Office Snack Break',
+        rule: 'Taken with 2–3 shots black Cothas coffee; water-soluble methylation for neurological stamina and shift focus.',
+        color: 'text-sky-400 bg-sky-500/10 border-sky-500/30'
+      },
+      {
+        key: 'supp_magnesium',
+        name: 'Magnesium Glycinate / Chelate',
+        dose: '1 Capsule',
+        time: '3:45 AM',
+        window: 'Pre-Bed Wind-Down',
+        rule: 'Taken at scale weigh-in; calms central nervous system, eases muscular hypertonicity, and deepens restorative slow-wave sleep.',
+        color: 'text-purple-400 bg-purple-500/10 border-purple-500/30'
+      }
+    ];
 
     // The Complete 10:30 AM to 3:45 AM Shift Protocol Timeline
     const TIMELINE_BLUEPRINT = [
@@ -472,8 +528,9 @@
         time: '10:30 AM',
         title: 'Wake-Up & Pre-Workout Primer',
         intake: 'ABC Shot: 2 Amlas + ½ Beetroot + ½ Carrot + 1" Ginger + 10–12 Curry leaves (blended with pulp) + 1.5 scoops Watermelon Creatine + 1 tsp Moringa',
-        target: 'Dietary Nitrates, ~800mg Vitamin C, 5g Creatine, Electrolytes',
-        code: 'J'
+        target: 'Dietary Nitrates, ~800mg Vitamin C, 5g Creatine, Cellular ATP priming',
+        code: 'J',
+        suppKey: 'supp_creatine_moringa'
       },
       {
         id: 't-1100',
@@ -481,7 +538,8 @@
         title: 'Movement Prep & Priming',
         intake: '20–30 min Yoga Mobility + Chores + 600m Walk to Gym',
         target: 'Joint lubrication, spinal decompression',
-        code: null
+        code: null,
+        suppKey: null
       },
       {
         id: 't-1130',
@@ -489,15 +547,17 @@
         title: 'Training Window',
         intake: '3-Day Full Body Rebuild (Mon/Wed/Fri) OR 45-Min Brisk Walk (Tue/Thu/Sat/Sun)',
         target: 'Hypertrophy stimulus / Active Zone 2 fat oxidation',
-        code: null
+        code: null,
+        suppKey: null
       },
       {
         id: 't-1300',
         time: '1:00 PM',
         title: 'Post-Workout Anabolic Anchor',
-        intake: '5 Whole Boiled Eggs + Vitamin D3 (2,000 IU) + Omega-3 Flaxseed Oil Capsule',
-        target: '30g Protein, Choline, Fat-soluble vitamin transport',
-        code: 'E'
+        intake: '5 Whole Boiled Eggs + Vitamin D3 (2,000 IU) + Omega-3 Flaxseed Oil Capsule + Zinc Tablet',
+        target: '30g Protein, Choline, Lipid vitamin absorption, Zinc stomach protection (zero calcium clash)',
+        code: 'E',
+        suppKey: 'supp_d3_omega_zinc'
       },
       {
         id: 't-1400',
@@ -505,15 +565,17 @@
         title: 'High-Protein Satiety Anchor',
         intake: '80g High-Protein Oats + 100g Curd (thinned with water) + 1 Scoop Protein Powder + Custom Seed Mix',
         target: '~49.5g Protein, Beta-glucans, Prebiotics, Healthy fats',
-        code: 'O_S' // Handles both O & S
+        code: 'O_S',
+        suppKey: null
       },
       {
         id: 't-1630',
         time: '4:30 PM',
         title: 'Pre-Shift Commute Buffer',
-        intake: 'Iron Capsule + Fresh Lemon Water (Strictly away from dairy & caffeine)',
-        target: 'Maximum non-heme iron absorption',
-        code: null
+        intake: 'Iron Tablet + Vitamin C Tablet (100–500 mg ascorbic acid) with plain water',
+        target: '2–3x Non-heme iron absorption without enamel wear (2.5h after dairy & 2h before coffee)',
+        code: null,
+        suppKey: 'supp_iron_vitc'
       },
       {
         id: 't-1800',
@@ -521,7 +583,8 @@
         title: 'Shift Starts',
         intake: 'Desk arrival (sustained fullness from 2:00 PM meal)',
         target: 'Cognitive focus & metabolic satiety',
-        code: null
+        code: null,
+        suppKey: null
       },
       {
         id: 't-1830',
@@ -529,7 +592,8 @@
         title: 'Office Snack Break',
         intake: '2–3 Shots Black Cothas Coffee (Zero sugar, zero milk) + Vitamin B12 + 500ml Water',
         target: 'Adenosine blockade, cellular energy, 8.5h sleep buffer',
-        code: 'C'
+        code: 'C',
+        suppKey: 'supp_b12'
       },
       {
         id: 't-2100',
@@ -537,7 +601,8 @@
         title: 'Office Dinner Break',
         isDinnerSelector: true,
         target: '25g Protein, Zero-bloat gut comfort',
-        code: 'R'
+        code: 'R',
+        suppKey: null
       },
       {
         id: 't-0000',
@@ -545,7 +610,8 @@
         title: 'Midnight Hunger Shield',
         intake: '1 Pack Amul Protein Lassi (200ml)',
         target: '14g Slow-release dairy protein, craving suppression',
-        code: 'L'
+        code: 'L',
+        suppKey: null
       },
       {
         id: 't-0030',
@@ -553,25 +619,18 @@
         title: 'Shift Finish & Fast',
         intake: 'Kitchen closed. Water only (complete 2.5L daily target).',
         target: 'Insulin stabilization & gut rest',
-        code: null
+        code: null,
+        suppKey: null
       },
       {
         id: 't-0345',
         time: '3:45 AM',
         title: 'Nightly Ritual & Sleep',
         intake: 'Official Scale Weigh-in + Magnesium Capsule → Sleep in a cool, dark room',
-        target: 'CNS relaxation, REM sleep optimization',
-        code: null
+        target: 'CNS relaxation, slow-wave deep sleep optimization',
+        code: null,
+        suppKey: 'supp_magnesium'
       }
-    ];
-
-    // Micronutrient Isolation Definitions
-    const MICRONUTRIENT_SUPPLEMENTS = [
-      { key: 'supp_vitc', label: 'Vitamin C & Nitrates', time: '10:30 AM', desc: '2 Amlas (~800mg Vit C) + Beetroot in ABC shot' },
-      { key: 'supp_d3', label: 'Vitamin D3 & Omega-3', time: '1:00 PM', desc: 'Fat-soluble, taken with whole egg yolks' },
-      { key: 'supp_iron', label: 'Elemental Iron + Lemon', time: '4:30 PM', desc: 'Strictly away from dairy & coffee' },
-      { key: 'supp_b12', label: 'Vitamin B12 Methyl', time: '6:30 PM', desc: 'Shift stamina & neurological cellular energy' },
-      { key: 'supp_mag', label: 'Magnesium Capsule', time: '3:45 AM', desc: 'Pre-sleep CNS relaxation & slow-wave recovery' }
     ];
 
     // 4-Week Spine-Safe Rebuild Programs
@@ -658,7 +717,7 @@
     }
 
     function loadStoredDatabase() {
-      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('winter_arc_90day_blueprint_v1');
+      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('winter_arc_90day_blueprint_v2') || localStorage.getItem('winter_arc_90day_blueprint_v1');
       if (raw) {
         try { return JSON.parse(raw); } catch (e) { console.error('Parse error', e); }
       }
@@ -700,27 +759,35 @@
         TIMELINE_BLUEPRINT.forEach(item => { initialTimeline[item.id] = false; });
 
         const initialSupps = {};
-        MICRONUTRIENT_SUPPLEMENTS.forEach(s => { initialSupps[s.key] = false; });
+        MASTER_SUPPLEMENT_PROTOCOL.forEach(s => { initialSupps[s.key] = false; });
 
         appDatabase[dateStr] = {
           splitKey: splitKey,
           timeline: initialTimeline,
           codes: initialCodes,
-          dinnerChoice: 'paneer', // 'paneer' or 'soya'
+          dinnerChoice: 'paneer',
           supplements: initialSupps,
           workoutMoves: initialMoves,
           waterMl: 0,
+          stepsCount: 0,
           scaleWeight: dateStr === getTodayString() ? 86.6 : ''
         };
         saveStoredDatabase();
       }
 
-      // Backwards compatibility safety check
-      if (!appDatabase[dateStr].dinnerChoice) {
-        appDatabase[dateStr].dinnerChoice = 'paneer';
-      }
+      const rec = appDatabase[dateStr];
+      if (!rec.dinnerChoice) rec.dinnerChoice = 'paneer';
+      if (!rec.supplements) rec.supplements = {};
+      if (typeof rec.stepsCount === 'undefined') rec.stepsCount = 0;
 
-      return appDatabase[dateStr];
+      // Migrate / ensure all protocol keys exist
+      MASTER_SUPPLEMENT_PROTOCOL.forEach(s => {
+        if (typeof rec.supplements[s.key] === 'undefined') {
+          rec.supplements[s.key] = false;
+        }
+      });
+
+      return rec;
     }
 
     function showToast(msg, icon = 'check-circle') {
@@ -759,10 +826,17 @@
 
       renderTrackingStringBadges(record);
 
+      // Water stats
       const waterMl = record.waterMl || 0;
       document.getElementById('water-display-count').innerText = `${(waterMl / 1000).toFixed(2)} / 2.5 L`;
       const waterPct = Math.min(Math.round((waterMl / 2500) * 100), 100);
       document.getElementById('water-progress-bar').style.width = `${waterPct}%`;
+
+      // Steps stats
+      const steps = record.stepsCount || 0;
+      document.getElementById('steps-display-count').innerText = `${steps.toLocaleString()} / 10,000`;
+      const stepsPct = Math.min(Math.round((steps / 10000) * 100), 100);
+      document.getElementById('steps-progress-bar').style.width = `${stepsPct}%`;
 
       renderSupplementsList(record);
       renderTimelineMilestones(record);
@@ -815,9 +889,10 @@
         return code;
       });
 
+      const suppDoneCount = MASTER_SUPPLEMENT_PROTOCOL.filter(s => record.supplements[s.key]).length;
       const stringFormat = `[ ${parts.join(' - ')} ]`;
       const pct = Math.round((CODE_ORDER.filter(c => record.codes[c]).length / CODE_ORDER.length) * 100);
-      const textToCopy = `WINTER ARC DAILY PROOF (${currentDateStr}): ${stringFormat} (${pct}% Achieved) | Dinner: ${record.dinnerChoice === 'soya' ? '50g Soya Chunks' : '100g High-Protein Paneer'} | Scale Weight: ${record.scaleWeight ? record.scaleWeight + ' kg' : 'Pending 3:45 AM'}`;
+      const textToCopy = `WINTER ARC PROOF (${currentDateStr}): ${stringFormat} (${pct}% Meals) | Supps: ${suppDoneCount}/5 Locked | Dinner: ${record.dinnerChoice === 'soya' ? '50g Soya Chunks' : '100g High-Protein Paneer'} | Steps: ${(record.stepsCount||0).toLocaleString()} | Scale: ${record.scaleWeight ? record.scaleWeight + ' kg' : 'Pending 3:45 AM'}`;
 
       const dummy = document.createElement('textarea');
       dummy.value = textToCopy;
@@ -830,44 +905,75 @@
     }
 
     /* ----------------------------------------------------
-       MICRONUTRIENT SUPPLEMENTS LIST
+       MASTER SUPPLEMENT PROTOCOL LIST
     ---------------------------------------------------- */
     function renderSupplementsList(record) {
       const container = document.getElementById('supplements-container');
       container.innerHTML = '';
       let activeCount = 0;
 
-      MICRONUTRIENT_SUPPLEMENTS.forEach(supp => {
+      MASTER_SUPPLEMENT_PROTOCOL.forEach(supp => {
         const isChecked = Boolean(record.supplements[supp.key]);
         if (isChecked) activeCount++;
 
         const item = document.createElement('div');
-        item.className = `p-3 rounded-xl border transition flex items-start gap-2.5 cursor-pointer ${
-          isChecked ? 'bg-arc-500/10 border-arc-500/40 text-white' : 'bg-[#151f30] border-slate-800 text-slate-300 hover:border-slate-700'
+        item.className = `p-3.5 rounded-xl border transition-all flex flex-col justify-between cursor-pointer ${
+          isChecked ? 'bg-arc-500/10 border-arc-500/50 shadow-md' : 'bg-[#151f30] border-slate-800 hover:border-slate-700'
         }`;
         item.onclick = () => toggleSupplement(supp.key);
 
         item.innerHTML = `
-          <input type="checkbox" ${isChecked ? 'checked' : ''} class="mt-0.5 rounded text-arc-500 pointer-events-none accent-emerald-500">
-          <div class="space-y-0.5">
-            <div class="text-xs font-bold flex items-center gap-1.5">
-              <span>${supp.label}</span>
-              <span class="text-[10px] font-mono font-normal text-arc-accent px-1.5 py-0.2 rounded bg-sky-500/10">${supp.time}</span>
+          <div>
+            <div class="flex items-start justify-between gap-2 mb-1.5">
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded ${supp.color}">${supp.time}</span>
+              <input type="checkbox" ${isChecked ? 'checked' : ''} class="mt-0.5 rounded text-arc-500 pointer-events-none accent-emerald-500">
             </div>
-            <p class="text-[11px] text-slate-400 leading-tight">${supp.desc}</p>
+            <h4 class="text-xs font-black text-white">${escapeHtml(supp.name)}</h4>
+            <div class="text-[11px] text-arc-accent font-mono font-medium mt-0.5">${escapeHtml(supp.dose)}</div>
+            <p class="text-[11px] text-slate-400 mt-2 leading-tight">${escapeHtml(supp.rule)}</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px]">
+            <span class="text-slate-500">${escapeHtml(supp.window)}</span>
+            <span class="font-bold ${isChecked ? 'text-arc-400' : 'text-slate-500'}">${isChecked ? 'Locked' : 'Tap to Log'}</span>
           </div>
         `;
         container.appendChild(item);
       });
 
-      document.getElementById('supplements-status-count').innerText = `${activeCount} / ${MICRONUTRIENT_SUPPLEMENTS.length} Logged`;
+      document.getElementById('supplements-status-count').innerText = `${activeCount} / ${MASTER_SUPPLEMENT_PROTOCOL.length} Locked`;
     }
 
     function toggleSupplement(key) {
       const record = getOrInitDateRecord(currentDateStr);
       record.supplements[key] = !record.supplements[key];
+
+      // Auto sync corresponding timeline check
+      const matchedTimeline = TIMELINE_BLUEPRINT.find(t => t.suppKey === key);
+      if (matchedTimeline) {
+        record.timeline[matchedTimeline.id] = record.supplements[key];
+        if (matchedTimeline.code) {
+          record.codes[matchedTimeline.code] = record.supplements[key];
+        }
+      }
+
       saveStoredDatabase();
       renderCompleteApp();
+      showToast(record.supplements[key] ? 'Supplement protocol locked' : 'Supplement unselected');
+    }
+
+    function markAllSupplementsComplete() {
+      const record = getOrInitDateRecord(currentDateStr);
+      MASTER_SUPPLEMENT_PROTOCOL.forEach(s => {
+        record.supplements[s.key] = true;
+        const matched = TIMELINE_BLUEPRINT.find(t => t.suppKey === s.key);
+        if (matched) {
+          record.timeline[matched.id] = true;
+          if (matched.code) record.codes[matched.code] = true;
+        }
+      });
+      saveStoredDatabase();
+      renderCompleteApp();
+      showToast('All 5 Supplement Protocols Locked!', 'check-check');
     }
 
     /* ----------------------------------------------------
@@ -878,7 +984,7 @@
       record.dinnerChoice = choice;
       saveStoredDatabase();
       renderCompleteApp();
-      showToast(`Dinner logged as: ${choice === 'soya' ? '50g Soya Chunks' : '100g High-Protein Paneer'}`);
+      showToast(`Dinner logged: ${choice === 'soya' ? '50g Soya Chunks' : '100g Paneer'}`);
     }
 
     function renderTimelineMilestones(record) {
@@ -916,6 +1022,19 @@
               <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${hasCode ? 'bg-arc-500 text-slate-950' : 'bg-slate-800 text-arc-400 border border-arc-500/30'}">[ ${item.code} ]</span>
             `;
           }
+        }
+
+        let suppBadgeHtml = '';
+        if (item.suppKey) {
+          const isSuppLocked = Boolean(record.supplements[item.suppKey]);
+          suppBadgeHtml = `
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 ${
+              isSuppLocked ? 'bg-purple-500/20 text-purple-300 border-purple-500/40' : 'bg-slate-800 text-slate-400 border-slate-700'
+            }">
+              <i data-lucide="pill" class="w-3 h-3"></i>
+              <span>${isSuppLocked ? 'Protocol Locked' : 'Supp Protocol'}</span>
+            </span>
+          `;
         }
 
         // Special render for 9:00 PM Dinner with Paneer vs Soya toggle
@@ -966,6 +1085,7 @@
                 <span class="font-mono text-xs font-bold text-arc-accent">${item.time}</span>
                 <span class="text-xs font-bold ${isDone ? 'line-through text-slate-400' : 'text-white'}">${escapeHtml(item.title)}</span>
                 ${codeBadgeHtml}
+                ${suppBadgeHtml}
               </div>
               <div class="text-xs text-slate-300 leading-snug">${escapeHtml(item.intake)}</div>
               <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
@@ -978,7 +1098,7 @@
 
         card.innerHTML = `
           <div class="flex items-start gap-3">
-            <button onclick="toggleTimelineItem('${item.id}', '${item.code}')" class="mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition ${
+            <button onclick="toggleTimelineItem('${item.id}', '${item.code}', '${item.suppKey || ''}')" class="mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition ${
               isDone ? 'bg-arc-500 border-arc-500 text-slate-950 font-bold' : 'border-slate-600 hover:border-slate-400'
             }">
               ${isDone ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
@@ -987,7 +1107,7 @@
           </div>
 
           <div class="sm:self-center shrink-0">
-            <button onclick="toggleTimelineItem('${item.id}', '${item.code}')" class="text-xs font-semibold px-2.5 py-1 rounded-lg transition ${
+            <button onclick="toggleTimelineItem('${item.id}', '${item.code}', '${item.suppKey || ''}')" class="text-xs font-semibold px-2.5 py-1 rounded-lg transition ${
               isDone ? 'bg-slate-800 text-slate-300' : 'bg-arc-500/20 hover:bg-arc-500/30 text-arc-400 border border-arc-500/30'
             }">
               ${isDone ? 'Completed' : 'Mark Done'}
@@ -999,7 +1119,7 @@
       });
     }
 
-    function toggleTimelineItem(itemId, itemCode) {
+    function toggleTimelineItem(itemId, itemCode, suppKey) {
       const record = getOrInitDateRecord(currentDateStr);
       const newState = !record.timeline[itemId];
       record.timeline[itemId] = newState;
@@ -1013,11 +1133,9 @@
         }
       }
 
-      if (itemId === 't-1030') record.supplements.supp_vitc = newState;
-      if (itemId === 't-1300') record.supplements.supp_d3 = newState;
-      if (itemId === 't-1630') record.supplements.supp_iron = newState;
-      if (itemId === 't-1830') record.supplements.supp_b12 = newState;
-      if (itemId === 't-0345') record.supplements.supp_mag = newState;
+      if (suppKey && suppKey !== '') {
+        record.supplements[suppKey] = newState;
+      }
 
       saveStoredDatabase();
       renderCompleteApp();
@@ -1036,8 +1154,11 @@
             record.codes[item.code] = true;
           }
         }
+        if (item.suppKey) {
+          record.supplements[item.suppKey] = true;
+        }
       });
-      MICRONUTRIENT_SUPPLEMENTS.forEach(s => { record.supplements[s.key] = true; });
+      MASTER_SUPPLEMENT_PROTOCOL.forEach(s => { record.supplements[s.key] = true; });
       saveStoredDatabase();
       renderCompleteApp();
       showToast('All Daily Milestones Completed!', 'check-check');
@@ -1118,7 +1239,7 @@
     }
 
     /* ----------------------------------------------------
-       WATER, SCALE & CHART VISUALIZATIONS
+       WATER, STEPS, SCALE & CHART VISUALIZATIONS
     ---------------------------------------------------- */
     function addWaterMl(amount) {
       const record = getOrInitDateRecord(currentDateStr);
@@ -1126,6 +1247,14 @@
       saveStoredDatabase();
       renderCompleteApp();
       showToast(`+${amount} ml Water Logged`);
+    }
+
+    function addSteps(amount) {
+      const record = getOrInitDateRecord(currentDateStr);
+      record.stepsCount = (record.stepsCount || 0) + amount;
+      saveStoredDatabase();
+      renderCompleteApp();
+      showToast(`+${amount.toLocaleString()} Steps Logged`);
     }
 
     function logScaleWeight() {
