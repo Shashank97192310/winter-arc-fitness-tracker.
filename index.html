@@ -93,15 +93,21 @@
               Target: <span class="font-mono text-arc-400 font-bold">86.6 kg &rarr; &lt;78 kg</span>
             </p>
             
-            <!-- Shift line stacked neatly below Target -->
-            <p class="text-[11px] sm:text-xs text-slate-400 flex items-center gap-1 leading-tight">
-              <i data-lucide="moon" class="w-3.5 h-3.5 text-sky-400 shrink-0"></i>
-              <span>Shift: <strong class="text-slate-300 font-mono">6:00 PM – 3:00 AM</strong></span>
-            </p>
+            <!-- Shift & Calibrated Wake-up stacked neatly below Target -->
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] sm:text-xs text-slate-400 leading-tight">
+              <p class="flex items-center gap-1">
+                <i data-lucide="moon" class="w-3.5 h-3.5 text-sky-400 shrink-0"></i>
+                <span>Shift: <strong class="text-slate-300 font-mono">6:00 PM – 3:00 AM</strong></span>
+              </p>
+              <button onclick="openModal('sleep-modal')" class="text-arc-400 hover:text-arc-300 underline font-semibold flex items-center gap-1">
+                <i data-lucide="bed-double" class="w-3 h-3 text-arc-400"></i>
+                <span>Wake: 11:30 AM (7.5h Sleep)</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- Right: Vertically Stacked Action Icons (Backup on Top, Audit below) -->
+        <!-- Right: Vertically Stacked Action Icons -->
         <div class="flex flex-col gap-1.5 shrink-0">
           <!-- Top: Data Export / Backup -->
           <button onclick="openModal('backup-modal')" 
@@ -143,6 +149,28 @@
 
   <main class="max-w-7xl mx-auto px-4 lg:px-8 pt-6 space-y-6">
 
+    <!-- SLEEP SCIENCE NOTICE BANNER -->
+    <section class="bg-gradient-to-r from-arc-card via-[#1c273c] to-[#172338] rounded-2xl p-4 sm:p-5 border border-arc-accent/30 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div class="flex items-start gap-3">
+        <div class="p-2.5 rounded-xl bg-sky-500/15 text-sky-400 border border-sky-500/30 shrink-0">
+          <i data-lucide="moon-star" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-black uppercase tracking-wider text-sky-400 px-2 py-0.5 bg-sky-500/10 rounded-full border border-sky-500/25">Calibrated Sleep Rhythm</span>
+            <span class="text-xs text-slate-300 font-bold font-mono">4:00 AM &rarr; 11:30 AM = Exactly 7.5 Hours</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+            5 full 90-min Ultradian sleep cycles. Protects endocrine balance, prevents cortisol/ghrelin spikes, and maximizes fat oxidation at ~1,780 kcal.
+          </p>
+        </div>
+      </div>
+      <button onclick="openModal('sleep-modal')" class="px-3.5 py-1.5 rounded-xl bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-bold transition shrink-0 flex items-center gap-1.5">
+        <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+        <span>Sleep Science Breakdown</span>
+      </button>
+    </section>
+
     <!-- DAILY CODE STRING CARD -->
     <section class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 shadow-xl glow-border">
       <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
@@ -150,7 +178,7 @@
         <div class="space-y-1">
           <div class="flex items-center gap-2">
             <span class="text-[10px] font-black uppercase tracking-wider text-arc-400 px-2 py-0.5 bg-arc-500/10 rounded-full border border-arc-500/20">Nightly Verification</span>
-            <span class="text-xs text-slate-400">Earned nightly at <strong class="text-slate-200 font-mono">3:45 AM</strong></span>
+            <span class="text-xs text-slate-400">Earned nightly at <strong class="text-slate-200 font-mono">3:50 AM</strong></span>
           </div>
           <h2 class="text-lg sm:text-xl font-black text-white">Daily Code String: <span id="string-complete-pct" class="text-arc-400">0%</span> Complete</h2>
           <p class="text-xs text-slate-400">Check off all 7 nutritional milestones to unlock your verifiable winter arc tracking string.</p>
@@ -252,7 +280,7 @@
 
     </section>
 
-    <!-- MASTER DAILY SUPPLEMENT & MEDICATION PROTOCOL -->
+    <!-- MASTER DAILY SUPPLEMENT & MEDICATION PROTOCOL (CALIBRATED TIMES) -->
     <section class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-3 gap-2">
         <div class="flex items-center gap-2.5">
@@ -261,7 +289,7 @@
           </div>
           <div>
             <h3 class="text-sm font-bold text-white">Master Daily Supplement & Medication Protocol</h3>
-            <p class="text-xs text-slate-400">Locked-in timing windows with isolated nutrient absorption mechanics</p>
+            <p class="text-xs text-slate-400">Re-calibrated to 11:30 AM wake rhythm • Isolated nutrient uptake mechanisms</p>
           </div>
         </div>
         <div class="flex items-center gap-3">
@@ -287,7 +315,7 @@
             </div>
             <div>
               <h3 class="text-sm font-bold text-white">Daily Timeline & Shift Schedule</h3>
-              <p class="text-xs text-slate-400">Operational Milestones • 10:30 AM Wake-Up to 3:45 AM Sleep</p>
+              <p class="text-xs text-slate-400">Calibrated: 11:30 AM Wake-Up &rarr; 4:00 AM Lights Out</p>
             </div>
           </div>
           <button onclick="markAllTimelineComplete()" class="text-xs font-semibold text-arc-400 hover:text-arc-300">Check All</button>
@@ -299,7 +327,7 @@
         </div>
       </section>
 
-      <!-- RIGHT COLUMN: SPINE-SAFE REBUILD & 3:45 AM SCALE (5 Cols) -->
+      <!-- RIGHT COLUMN: SPINE-SAFE REBUILD & 3:50 AM SCALE (5 Cols) -->
       <section class="lg:col-span-5 space-y-6">
 
         <!-- WORKOUT BOX -->
@@ -311,19 +339,19 @@
               </div>
               <div>
                 <h3 class="text-sm font-bold text-white" id="workout-box-title">Spine-Safe Structural Rebuild</h3>
-                <p class="text-xs text-slate-400">11:30 AM Anchor • Zero Spinal Compression</p>
+                <p class="text-xs text-slate-400">12:30 PM Window • Zero Spinal Compression</p>
               </div>
             </div>
 
             <!-- Split Selector Dropdown -->
             <select id="workout-split-selector" class="bg-[#151f30] border border-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-arc-500">
               <option value="Day A">Mon: Day A (Posture & Anchor)</option>
-              <option value="LISS Tue">Tue: 45m Brisk LISS Walk</option>
+              <option value="LISS Tue">Tue: 40m Brisk LISS Walk</option>
               <option value="Day B">Wed: Day B (Posterior Chain & Core)</option>
-              <option value="LISS Thu">Thu: 45m Brisk LISS Walk</option>
+              <option value="LISS Thu">Thu: 40m Brisk LISS Walk</option>
               <option value="Day C">Fri: Day C (Full Body Activation)</option>
-              <option value="LISS Sat">Sat: 45m Outdoor Walk</option>
-              <option value="LISS Sun">Sun: 45m Active Rest & Walk</option>
+              <option value="LISS Sat">Sat: 40m Outdoor Walk</option>
+              <option value="LISS Sun">Sun: 40m Active Rest & Walk</option>
             </select>
           </div>
 
@@ -331,10 +359,10 @@
           <div class="p-3 rounded-xl bg-arc-500/10 border border-arc-500/25 text-xs">
             <div class="flex items-center gap-2 font-bold text-arc-400">
               <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span id="primer-title">Dynamic Primer (5 min)</span>
+              <span id="primer-title">Dynamic Primer (15–20 min)</span>
             </div>
             <p id="primer-description" class="text-slate-300 mt-1 leading-relaxed">
-              Cat-Cow (10 reps) + Bird Dogs (3 sets × 8 reps/side with 2-sec glute hold).
+              Bird Dogs (3 sets × 8 reps/side) + Cat-Cow (10 slow reps) + Hip flexor psoas release + 600m walk.
             </p>
           </div>
 
@@ -349,7 +377,7 @@
           </div>
         </div>
 
-        <!-- 3:45 AM OFFICIAL SCALE WEIGH-IN -->
+        <!-- 3:50 AM OFFICIAL SCALE WEIGH-IN -->
         <div class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4 shadow-lg">
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <div class="flex items-center gap-2.5">
@@ -357,8 +385,8 @@
                 <i data-lucide="scale" class="w-4 h-4"></i>
               </div>
               <div>
-                <h3 class="text-sm font-bold text-white">Official 3:45 AM Scale Weigh-In</h3>
-                <p class="text-xs text-slate-400">Pre-sleep standardized condition</p>
+                <h3 class="text-sm font-bold text-white">Official 3:50 AM Scale Weigh-In</h3>
+                <p class="text-xs text-slate-400">Standardized pre-bed ritual + Magnesium</p>
               </div>
             </div>
             <span class="text-xs font-mono font-bold text-arc-400">Target: &lt;78.0 kg</span>
@@ -386,6 +414,85 @@
     </div>
 
   </main>
+
+  <!-- MODAL: SLEEP SCIENCE & ULTRADIAN CYCLES -->
+  <div id="sleep-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 hidden">
+    <div class="bg-[#1e293b] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-700 p-6 shadow-2xl relative space-y-5">
+      
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+        <div>
+          <h3 class="font-black text-white text-base sm:text-lg flex items-center gap-2">
+            <i data-lucide="moon-star" class="w-5 h-5 text-arc-accent"></i>
+            The Sleep Science: Ultradian Cycles & Fat Loss
+          </h3>
+          <p class="text-xs text-slate-400">Why waking at 11:30 AM is non-negotiable on a ~1,780 kcal cut</p>
+        </div>
+        <button onclick="closeModal('sleep-modal')" class="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs text-slate-300 leading-relaxed">
+        
+        <!-- Sleep Math Card -->
+        <div class="p-4 rounded-xl bg-[#151f30] border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="p-1 rounded bg-sky-500/20 text-sky-400 font-mono text-xs">1</span>
+              The Sleep Math: 5 Full 90-Min Cycles
+            </h4>
+            <span class="font-mono text-arc-400 font-bold">4:00 AM &rarr; 11:30 AM (7.5h)</span>
+          </div>
+          <p class="text-slate-400">
+            Human sleep is structured in 90-minute ultradian cycles (Light Sleep &rarr; Deep Slow-Wave Sleep &rarr; REM). Waking mid-cycle causes severe sleep inertia, morning brain fog, and perceived fatigue regardless of total hours. Waking at exactly 7.5 hours lands you at the end of cycle 5 in light/REM sleep, leaving you energized.
+          </p>
+          <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-300">
+            <strong>Deep Recovery Option:</strong> On days when CNS or lower back fatigue is acute, sleeping until <strong>12:00 PM (8.0 Hours)</strong> provides extra slow-wave tissue regeneration.
+          </div>
+        </div>
+
+        <!-- The 10:30 AM Pitfall -->
+        <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 space-y-2">
+          <h4 class="font-bold text-rose-300 text-sm flex items-center gap-2">
+            <span class="p-1 rounded bg-rose-500/20 text-rose-400 font-mono text-xs">2</span>
+            Why The Old 10:30 AM Wake-Up Was Stalling Fat Loss
+          </h4>
+          <p class="text-slate-300">
+            Going to sleep at 4:00 AM and waking at 10:30 AM yielded only <strong>6.5 hours of sleep</strong>. On an aggressive deficit (~1,780 kcal), chronic 6.5h sleep triggers:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-300">
+            <li><strong>Ghrelin Spikes:</strong> Increases daytime hunger and cravings for high-glycemic carbohydrates.</li>
+            <li><strong>Cortisol Elevation:</strong> Drives systemic inflammation and forces visceral water and adipose retention around the lower abdomen.</li>
+            <li><strong>Impaired Glucose Sensitivity:</strong> Worsens nutrient partitioning during afternoon carbohydrate meals.</li>
+          </ul>
+        </div>
+
+        <!-- Critical Rules -->
+        <div class="p-4 rounded-xl bg-[#151f30] border border-slate-800 space-y-2">
+          <h4 class="font-bold text-arc-400 text-sm flex items-center gap-2">
+            <span class="p-1 rounded bg-arc-500/20 text-arc-400 font-mono text-xs">3</span>
+            Two Non-Negotiable Rules for 4:00 AM Sleeping
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+            <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+              <strong class="text-white block mb-1">1. Blackout Environment:</strong>
+              Morning sunlight suppresses natural melatonin. Use full blackout curtains or a contoured eye mask so daylight does not wake you between 7:00 AM and 11:30 AM.
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+              <strong class="text-white block mb-1">2. Magnesium at 3:50 AM:</strong>
+              Taking elemental magnesium right after arriving home down-regulates sympathetic tone, drops resting heart rate, and induces rapid sleep onset by 4:00 AM.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="closeModal('sleep-modal')" class="px-5 py-2 text-xs font-bold bg-arc-500 hover:bg-arc-400 text-slate-950 rounded-xl transition">Got It</button>
+      </div>
+
+    </div>
+  </div>
 
   <!-- MODAL: OCTOBER 31 MILESTONE AUDIT -->
   <div id="audit-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 hidden">
@@ -485,174 +592,201 @@
 
   <!-- JAVASCRIPT LOGIC ENGINE -->
   <script>
-    const STORAGE_KEY = 'winter_arc_90day_blueprint_v3';
+    const STORAGE_KEY = 'winter_arc_90day_blueprint_v4';
 
-    // The Locked-In Master Daily Supplement & Medication Protocol
+    // Master Daily Supplement Protocol Re-calibrated to 11:30 AM Wake Schedule
     const MASTER_SUPPLEMENT_PROTOCOL = [
       {
         key: 'supp_creatine_moringa',
         name: 'Creatine & Moringa',
         dose: '1.5 scoops (~5g) + 1 tsp Moringa',
-        time: '10:30 AM',
-        window: 'Wake-Up & Pre-Gym Primer',
-        rule: 'Blended into ABC juice pulp; saturates cellular phosphocreatine to power ATP for 11:30 AM lift.',
+        time: '11:45 AM',
+        window: 'Pre-Workout ABC Primer',
+        rule: 'Blended into ABC juice pulp; saturates phosphocreatine stores for the 12:30 PM training session.',
         color: 'text-arc-400 bg-arc-500/10 border-arc-500/30'
       },
       {
         key: 'supp_d3_omega_zinc',
         name: 'D3 + Omega-3 + Zinc',
         dose: 'D3 (2,000 IU) + Omega-3 Flax + Zinc Tablet',
-        time: '1:00 PM',
-        window: 'Post-Gym Anabolic Anchor',
-        rule: 'Egg yolk lipids maximize fat-soluble D3 and Omega-3 uptake; eggs buffer stomach against zinc nausea with zero calcium interference. Separated from Iron by 3.5h.',
+        time: '1:45 PM',
+        window: 'Post-Workout Anchor (5 Eggs)',
+        rule: 'Egg yolk lipids optimize fat-soluble D3 and Omega-3 uptake. Eggs buffer stomach against nausea with zero calcium interference. Separated from Iron by 3.25h.',
         color: 'text-amber-400 bg-amber-500/10 border-amber-500/30'
       },
       {
         key: 'supp_iron_vitc',
         name: 'Iron + Vitamin C Tablet',
         dose: 'Iron Tablet + 100–500mg Ascorbic Acid',
-        time: '4:30 PM',
-        window: 'Pre-Commute Buffer',
-        rule: 'Taken with plain water. Pure ascorbic acid yields 2–3x non-heme absorption without dental enamel erosion. Strict buffer: 2.5h after curd and 2h before coffee.',
+        time: '5:00 PM',
+        window: 'Pre-Commute Buffer (Plain Water)',
+        rule: 'Ascorbic acid delivers 2–3x non-heme absorption without enamel wear. Strictly 2h 15m after curd and 2h before caffeine.',
         color: 'text-rose-400 bg-rose-500/10 border-rose-500/30'
       },
       {
         key: 'supp_b12',
         name: 'Vitamin B12 Methyl',
         dose: '1 Sublingual / Tablet',
-        time: '6:30 PM',
-        window: 'Office Snack Break',
-        rule: 'Taken with 2–3 shots black Cothas coffee; water-soluble methylation for neurological stamina and shift focus.',
+        time: '7:00 PM',
+        window: 'Office Coffee Window',
+        rule: 'Taken with 2–3 shots black Cothas coffee (strict caffeine cutoff for the night); supports cellular stamina.',
         color: 'text-sky-400 bg-sky-500/10 border-sky-500/30'
       },
       {
         key: 'supp_magnesium',
         name: 'Magnesium Glycinate / Chelate',
         dose: '1 Capsule',
-        time: '3:45 AM',
-        window: 'Pre-Bed Wind-Down',
-        rule: 'Taken at scale weigh-in; calms central nervous system, eases muscular hypertonicity, and deepens restorative slow-wave sleep.',
+        time: '3:50 AM',
+        window: 'Nightly Ritual & Scale Weigh-in',
+        rule: 'Taken upon home arrival; primes parasympathetic down-regulation, relaxes hypertonic spinal muscles, and deepens slow-wave sleep before 4:00 AM lights out.',
         color: 'text-purple-400 bg-purple-500/10 border-purple-500/30'
       }
     ];
 
-    // The Complete 10:30 AM to 3:45 AM Shift Protocol Timeline
+    // The Calibrated Daily Shift Schedule (11:30 AM Wake -> 4:00 AM Lights Out)
     const TIMELINE_BLUEPRINT = [
       {
-        id: 't-1030',
-        time: '10:30 AM',
-        title: 'Wake-Up & Pre-Workout Primer',
+        id: 't-1130',
+        time: '11:30 AM',
+        title: 'Wake Up & Circadian Alignment',
+        intake: 'Wake up after 7.5h restorative sleep (5 full 90-min cycles complete). Sunlight exposure / room light.',
+        target: 'Zero sleep inertia; natural cortisol awakening spike without grogginess',
+        code: null,
+        suppKey: null
+      },
+      {
+        id: 't-1145',
+        time: '11:45 AM',
+        title: 'Pre-Workout Primer & Nitrates',
         intake: 'ABC Shot: 2 Amlas + ½ Beetroot + ½ Carrot + 1" Ginger + 10–12 Curry leaves (blended with pulp) + 1.5 scoops Watermelon Creatine + 1 tsp Moringa',
         target: 'Dietary Nitrates, ~800mg Vitamin C, 5g Creatine, Cellular ATP priming',
         code: 'J',
         suppKey: 'supp_creatine_moringa'
       },
       {
-        id: 't-1100',
-        time: '11:00 AM',
+        id: 't-1200',
+        time: '12:00 PM',
         title: 'Movement Prep & Priming',
-        intake: '20–30 min Yoga Mobility + Chores + 600m Walk to Gym',
-        target: 'Joint lubrication, spinal decompression',
+        intake: '15–20 min Yoga Mobility drills (Bird Dogs, Cat-Cow, hip flexor release) + Chores + 600m walk to gym',
+        target: 'Spinal decompression, synovial fluid circulation, glute activation',
         code: null,
         suppKey: null
       },
       {
-        id: 't-1130',
-        time: '11:30 AM – 12:15 PM',
-        title: 'Training Window',
-        intake: '3-Day Full Body Rebuild (Mon/Wed/Fri) OR 45-Min Brisk Walk (Tue/Thu/Sat/Sun)',
-        target: 'Hypertrophy stimulus / Active Zone 2 fat oxidation',
+        id: 't-1230',
+        time: '12:30 PM – 1:15 PM',
+        title: 'Training Session',
+        intake: '3-Day Structural Rebuild Lift (Mon/Wed/Fri) OR 40-Min Continuous Brisk Walk (Tue/Thu/Sat/Sun)',
+        target: 'Spine-safe hypertrophy stimulus / Zone 2 pure fat oxidation',
         code: null,
         suppKey: null
       },
       {
-        id: 't-1300',
-        time: '1:00 PM',
+        id: 't-1345',
+        time: '1:45 PM',
         title: 'Post-Workout Anabolic Anchor',
-        intake: '5 Whole Boiled Eggs + Vitamin D3 (2,000 IU) + Omega-3 Flaxseed Oil Capsule + Zinc Tablet',
-        target: '30g Protein, Choline, Lipid vitamin absorption, Zinc stomach protection (zero calcium clash)',
+        intake: '5 Whole Boiled Eggs + Zinc Tablet + Vitamin D3 (2,000 IU) + Omega-3 Flaxseed Oil Capsule',
+        target: '30g High-biological-value protein, choline, lipid vitamin uptake, stomach nausea protection',
         code: 'E',
         suppKey: 'supp_d3_omega_zinc'
       },
       {
-        id: 't-1400',
-        time: '2:00 PM',
-        title: 'High-Protein Satiety Anchor',
-        intake: '80g High-Protein Oats + 100g Curd (thinned with water) + 1 Scoop Protein Powder + Custom Seed Mix',
-        target: '~49.5g Protein, Beta-glucans, Prebiotics, Healthy fats',
+        id: 't-1445',
+        time: '2:45 PM',
+        title: 'Satiety & Fuel Bomb',
+        intake: '80g High-Protein Oats + 100g Curd (thinned with water) + 1 Scoop Whey Protein + Custom Seed Mix',
+        target: '~49.5g Protein, beta-glucan soluble fiber, sustained afternoon fullness for desk arrival',
         code: 'O_S',
         suppKey: null
       },
       {
-        id: 't-1630',
-        time: '4:30 PM',
-        title: 'Pre-Shift Commute Buffer',
-        intake: 'Iron Tablet + Vitamin C Tablet (100–500 mg ascorbic acid) with plain water',
-        target: '2–3x Non-heme iron absorption without enamel wear (2.5h after dairy & 2h before coffee)',
+        id: 't-1700',
+        time: '5:00 PM',
+        title: 'Pre-Commute Iron Stack',
+        intake: 'Iron Capsule + Vitamin C Tablet (100–500 mg ascorbic acid) with plain water',
+        target: 'Maximum non-heme iron absorption; buffered 2h 15m after curd and 2h before office coffee',
         code: null,
         suppKey: 'supp_iron_vitc'
       },
       {
         id: 't-1800',
         time: '6:00 PM',
-        title: 'Shift Starts',
-        intake: 'Desk arrival (sustained fullness from 2:00 PM meal)',
-        target: 'Cognitive focus & metabolic satiety',
+        title: 'Shift Starts at Desk',
+        intake: 'Desk arrival (fully satiated and mentally sharp from 2:45 PM meal)',
+        target: 'High cognitive focus & stable blood glucose',
         code: null,
         suppKey: null
       },
       {
-        id: 't-1830',
-        time: '6:30 PM – 7:00 PM',
-        title: 'Office Snack Break',
-        intake: '2–3 Shots Black Cothas Coffee (Zero sugar, zero milk) + Vitamin B12 + 500ml Water',
-        target: 'Adenosine blockade, cellular energy, 8.5h sleep buffer',
+        id: 't-1900',
+        time: '7:00 PM',
+        title: 'Coffee Window & Caffeine Cutoff',
+        intake: '2–3 Shots Black Cothas Coffee (Zero milk/sugar) + Vitamin B12 + 500ml Water',
+        target: 'Strict caffeine cutoff! 9 hours before 4:00 AM sleep to protect slow-wave sleep architecture',
         code: 'C',
         suppKey: 'supp_b12'
       },
       {
-        id: 't-2100',
-        time: '9:00 PM – 9:30 PM',
-        title: 'Office Dinner Break',
+        id: 't-2130',
+        time: '9:30 PM',
+        title: 'Office Dinner Tiffin',
         isDinnerSelector: true,
-        target: '25g Protein, Zero-bloat gut comfort',
+        target: '~25g–26g Protein, zero-bloat gut comfort during seated desk work',
         code: 'R',
         suppKey: null
       },
       {
-        id: 't-0000',
-        time: '12:00 AM – 12:30 AM',
-        title: 'Midnight Hunger Shield',
+        id: 't-0030',
+        time: '12:30 AM',
+        title: 'Midnight Protein Shield',
         intake: '1 Pack Amul Protein Lassi (200ml)',
-        target: '14g Slow-release dairy protein, craving suppression',
+        target: '14g Slow-release dairy casein protein; prevents late-night shift cravings',
         code: 'L',
         suppKey: null
       },
       {
-        id: 't-0030',
-        time: '12:30 AM – 3:00 AM',
+        id: 't-0100',
+        time: '1:00 AM – 3:00 AM',
         title: 'Shift Finish & Fast',
-        intake: 'Kitchen closed. Water only (complete 2.5L daily target).',
-        target: 'Insulin stabilization & gut rest',
+        intake: 'Kitchen closed. Water only (complete 2.5L daily hydration target).',
+        target: 'Insulin stabilization, digestive rest, pre-bed gastric emptying',
         code: null,
         suppKey: null
       },
       {
-        id: 't-0345',
-        time: '3:45 AM',
-        title: 'Nightly Ritual & Sleep',
-        intake: 'Official Scale Weigh-in + Magnesium Capsule → Sleep in a cool, dark room',
-        target: 'CNS relaxation, slow-wave deep sleep optimization',
+        id: 't-0340',
+        time: '3:40 AM',
+        title: 'Home Arrival',
+        intake: 'Commute finish, transition into wind-down protocol',
+        target: 'Decompress from office lighting',
+        code: null,
+        suppKey: null
+      },
+      {
+        id: 't-0350',
+        time: '3:50 AM',
+        title: 'Nightly Ritual & Weigh-In',
+        intake: 'Official Scale Weigh-in (record number) + Magnesium Capsule',
+        target: 'CNS relaxation, parasympathetic tone activation, heart rate reduction',
         code: null,
         suppKey: 'supp_magnesium'
+      },
+      {
+        id: 't-0400',
+        time: '4:00 AM',
+        title: 'Lights Out & Blackout Sleep',
+        intake: 'Pitch black cold room (blackout curtains or eye mask) &rarr; Sleep until 11:30 AM',
+        target: '7.5 Hours uninterrupted sleep (5 full 90-min cycles); maximum growth hormone & fat loss',
+        code: null,
+        suppKey: null
       }
     ];
 
-    // 4-Week Spine-Safe Rebuild Programs
+    // 4-Week Spine-Safe Rebuild Programs (Aligned to 12:30 PM Training Window)
     const WORKOUT_SCHEDULE = {
       'Day A': {
         name: 'Day A (Monday): Posture & Upper Anchor',
-        primer: 'Dynamic Primer (5 min): Cat-Cow (10 slow reps) + Bird Dogs (3 sets × 8 reps/side with 2s glute hold).',
+        primer: 'Dynamic Primer (15–20 min): Bird Dogs (3 sets × 8 reps/side with 2s glute hold) + Cat-Cow (10 slow reps) + 600m walk.',
         moves: [
           { name: 'Lat Pulldowns (Wide/Neutral Grip)', sets: 3, reps: '10–12', cue: 'Pull to upper chest, 2-sec scapular squeeze' },
           { name: 'Incline Bench Pushups (or Machine Chest Press)', sets: 3, reps: '8–10', cue: 'Hands elevated on bench, rigid core plank' },
@@ -663,16 +797,16 @@
       },
       'LISS Tue': {
         name: 'Tuesday: Zone 2 Cardio (Brisk Walk)',
-        primer: '11:30 AM Rhythm Anchor: 20 min Light Hip Flexor & Psoas Stretch before walking.',
+        primer: '12:00 PM Primer: 15–20 min Light Hip Flexor & Psoas Stretch before walking.',
         moves: [
-          { name: 'Continuous Outdoor Brisk Walk', sets: 1, reps: '40–45m', cue: '~4,000–5,000 steps, Zone 2 fat oxidation, zero back compression' },
+          { name: 'Continuous Outdoor Brisk Walk', sets: 1, reps: '40m', cue: '~4,000–5,000 steps, Zone 2 fat oxidation, zero back compression' },
           { name: 'Kneeling Psoas Release', sets: 2, reps: '45s/side', cue: 'Neutral pelvis, squeeze glute' },
           { name: 'Cat-Cow Fluid Flexion', sets: 2, reps: '10 reps', cue: 'Circulates spinal synovial fluid' }
         ]
       },
       'Day B': {
         name: 'Day B (Wednesday): Posterior Chain & Core Bracing',
-        primer: 'Dynamic Primer (5 min): Glute Bridges (2 sets × 15 reps, 2s hold) + Front Plank (45–60 sec).',
+        primer: 'Dynamic Primer (15–20 min): Glute Bridges (2 sets × 15 reps, 2s hold) + Front Plank (45–60 sec) + 600m walk.',
         moves: [
           { name: 'Chest-Supported Dumbbell Rows', sets: 3, reps: '10–12', cue: 'Prone on 30° incline bench, zero lower back load' },
           { name: 'Seated DB Shoulder Press', sets: 3, reps: '10', cue: 'Back fully supported by upright bench' },
@@ -683,16 +817,16 @@
       },
       'LISS Thu': {
         name: 'Thursday: Zone 2 Cardio (Brisk Walk)',
-        primer: '11:30 AM Rhythm Anchor: Glute Bridge holds (2 sets x 12 reps) to awaken dormant glutes.',
+        primer: '12:00 PM Primer: Glute Bridge holds (2 sets x 12 reps) to awaken dormant glutes.',
         moves: [
-          { name: 'Continuous Outdoor Brisk Walk', sets: 1, reps: '40–45m', cue: '~4,000–5,000 steps, flat terrain or max 1% incline' },
+          { name: 'Continuous Outdoor Brisk Walk', sets: 1, reps: '40m', cue: '~4,000–5,000 steps, flat terrain or max 1% incline' },
           { name: 'Thoracic Foam Rolling', sets: 2, reps: '12 passes', cue: 'Undo desk slouch' },
           { name: 'Dead Hang Decompression', sets: 2, reps: '25s', cue: 'Decompress lumbar disc pressure' }
         ]
       },
       'Day C': {
         name: 'Day C (Friday): Full Body Strength Activation',
-        primer: 'Dynamic Primer (5 min): Bird Dogs (2 sets x 8 reps/side) + World’s Greatest Stretch (hip flexor release).',
+        primer: 'Dynamic Primer (15–20 min): Bird Dogs (2 sets x 8 reps/side) + World’s Greatest Stretch (hip flexor release) + 600m walk.',
         moves: [
           { name: 'Assisted Pull-Up Machine (or Neutral Lat Pulldown)', sets: 3, reps: '8–10', cue: 'Vertical pulling volume without 1-rep muscle exhaustion' },
           { name: 'Flat Dumbbell Bench Press', sets: 3, reps: '8–10', cue: 'Retract shoulder blades, 3-second controlled eccentric' },
@@ -703,17 +837,17 @@
       },
       'LISS Sat': {
         name: 'Saturday: Zone 2 Active Fat Oxidation',
-        primer: 'Flexible window: Daylight exposure & circadian rhythm maintenance.',
+        primer: 'Flexible 12:00 PM window: Daylight exposure & circadian rhythm maintenance.',
         moves: [
-          { name: 'Continuous Brisk Walk / Errands', sets: 1, reps: '40–45m', cue: '~4,000–5,000 steps, non-taxing active recovery' },
+          { name: 'Continuous Brisk Walk / Errands', sets: 1, reps: '40m', cue: '~4,000–5,000 steps, non-taxing active recovery' },
           { name: 'Full Body Gentle Foam Rolling', sets: 1, reps: '15m', cue: 'Relieve fascia tension' }
         ]
       },
       'LISS Sun': {
         name: 'Sunday: Active Rest & Circadian Reset',
-        primer: 'Flexible window: Full CNS relaxation after late night shifts.',
+        primer: 'Flexible 12:00 PM window: Full CNS relaxation after late night shifts.',
         moves: [
-          { name: 'Outdoor Daylight Walk', sets: 1, reps: '40–45m', cue: 'Circadian melatonin reset & light aerobic conditioning' },
+          { name: 'Outdoor Daylight Walk', sets: 1, reps: '40m', cue: 'Circadian melatonin reset & light aerobic conditioning' },
           { name: 'Hamstring & Calves Lengthening', sets: 2, reps: '45s/side', cue: 'Pre-Monday spinal posture preparation' }
         ]
       }
@@ -732,7 +866,7 @@
     }
 
     function loadStoredDatabase() {
-      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('winter_arc_90day_blueprint_v2') || localStorage.getItem('winter_arc_90day_blueprint_v1');
+      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('winter_arc_90day_blueprint_v3') || localStorage.getItem('winter_arc_90day_blueprint_v2') || localStorage.getItem('winter_arc_90day_blueprint_v1');
       if (raw) {
         try { return JSON.parse(raw); } catch (e) { console.error('Parse error', e); }
       }
@@ -799,6 +933,13 @@
       MASTER_SUPPLEMENT_PROTOCOL.forEach(s => {
         if (typeof rec.supplements[s.key] === 'undefined') {
           rec.supplements[s.key] = false;
+        }
+      });
+
+      // Migrate timeline IDs for the newly calibrated schedule
+      TIMELINE_BLUEPRINT.forEach(item => {
+        if (typeof rec.timeline[item.id] === 'undefined') {
+          rec.timeline[item.id] = false;
         }
       });
 
@@ -907,7 +1048,7 @@
       const suppDoneCount = MASTER_SUPPLEMENT_PROTOCOL.filter(s => record.supplements[s.key]).length;
       const stringFormat = `[ ${parts.join(' - ')} ]`;
       const pct = Math.round((CODE_ORDER.filter(c => record.codes[c]).length / CODE_ORDER.length) * 100);
-      const textToCopy = `WINTER ARC PROOF (${currentDateStr}): ${stringFormat} (${pct}% Meals) | Supps: ${suppDoneCount}/5 Locked | Dinner: ${record.dinnerChoice === 'soya' ? '50g Soya Chunks' : '100g High-Protein Paneer'} | Steps: ${(record.stepsCount||0).toLocaleString()} | Scale: ${record.scaleWeight ? record.scaleWeight + ' kg' : 'Pending 3:45 AM'}`;
+      const textToCopy = `WINTER ARC PROOF (${currentDateStr}): ${stringFormat} (${pct}% Meals) | Wake: 11:30 AM (7.5h Sleep) | Supps: ${suppDoneCount}/5 Locked | Dinner: ${record.dinnerChoice === 'soya' ? '50g Soya Chunks' : '100g High-Protein Paneer'} | Steps: ${(record.stepsCount||0).toLocaleString()} | Scale: ${record.scaleWeight ? record.scaleWeight + ' kg' : 'Pending 3:50 AM'}`;
 
       const dummy = document.createElement('textarea');
       dummy.value = textToCopy;
@@ -1052,7 +1193,7 @@
           `;
         }
 
-        // Special render for 9:00 PM Dinner with Paneer vs Soya toggle
+        // Special render for 9:30 PM Dinner with Paneer vs Soya toggle
         let bodyContentHtml = '';
         if (item.isDinnerSelector) {
           const isPaneer = (record.dinnerChoice || 'paneer') === 'paneer';
@@ -1082,14 +1223,14 @@
 
               <div class="text-xs text-slate-300 leading-snug">
                 ${isPaneer 
-                  ? '<strong>100g Milky Mist High-Protein Paneer</strong> + Cooked Rice + Mixed Veggies + Hing & Jeera (25g Protein, slow-release casein & healthy dairy fats)' 
-                  : '<strong>50g Soya Chunks</strong> (double-soaked, squeezed & minced) + Cooked Rice + Mixed Veggies + Hing & Jeera (26g Protein, ultra-lean amino acids)'
+                  ? '<strong>100g High-Protein Paneer</strong> + 40g (raw) Cooked Rice + 100g Veggies + Hing (25g Protein, slow-release casein & healthy dairy lipids)' 
+                  : '<strong>50g Soya Chunks</strong> (double-soaked & squeezed) + 40g (raw) Cooked Rice + 100g Veggies + Hing (26g Protein, ultra-lean amino profile)'
                 }
               </div>
 
               <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
                 <i data-lucide="check-circle-2" class="w-3 h-3 text-arc-400"></i>
-                <span>${isPaneer ? 'Zero-bloat gut comfort • Slower digestion' : 'Ultra-lean profile • Isoflavones & arginine'}</span>
+                <span>${isPaneer ? 'Zero-bloat gut comfort • Slower digestion' : 'Ultra-lean profile • High arginine & zero saturated fat'}</span>
               </div>
             </div>
           `;
@@ -1278,7 +1419,7 @@
       record.scaleWeight = isNaN(val) ? '' : val;
       saveStoredDatabase();
       renderCompleteApp();
-      showToast(`Logged 3:45 AM Scale: ${val} kg`);
+      showToast(`Logged 3:50 AM Scale: ${val} kg`);
     }
 
     function renderWeightTrend() {
@@ -1358,6 +1499,7 @@
     function downloadBackupJson() {
       const payload = {
         blueprint: 'THE 90-DAY WINTER ARC BLUEPRINT',
+        calibratedWake: '11:30 AM',
         exportedAt: new Date().toISOString(),
         logs: appDatabase
       };
@@ -1373,6 +1515,7 @@
     function copyRawJson() {
       const payload = {
         blueprint: 'THE 90-DAY WINTER ARC BLUEPRINT',
+        calibratedWake: '11:30 AM',
         exportedAt: new Date().toISOString(),
         logs: appDatabase
       };
