@@ -78,7 +78,7 @@
           </div>
           
           <div class="min-w-0 space-y-1">
-            <!-- Title & Badge in one clean line with increased size and presence -->
+            <!-- Title & Badge in one clean line -->
             <div class="flex items-center gap-2.5 flex-wrap">
               <h1 class="text-base sm:text-lg lg:text-xl font-black tracking-tight text-white uppercase whitespace-nowrap drop-shadow-sm">
                 The 90-Day Winter Arc
@@ -330,7 +330,7 @@
       <!-- RIGHT COLUMN: SPINE-SAFE REBUILD & 3:50 AM SCALE (5 Cols) -->
       <section class="lg:col-span-5 space-y-6">
 
-        <!-- WORKOUT BOX -->
+        <!-- WORKOUT BOX WITH COMPREHENSIVE 4-FIELD EXERCISE LOGS -->
         <div class="bg-[#1e293b] rounded-2xl p-5 border border-slate-800 space-y-4 shadow-lg">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-3 gap-2">
             <div class="flex items-center gap-2.5">
@@ -366,8 +366,8 @@
             </p>
           </div>
 
-          <!-- Movement Checklist -->
-          <div class="space-y-2.5" id="workout-moves-container">
+          <!-- Movement Checklist (Structured 4-Field Logger: Set, Weight, Reps, Notes) -->
+          <div class="space-y-3" id="workout-moves-container">
             <!-- Injected by JavaScript -->
           </div>
 
@@ -592,7 +592,7 @@
 
   <!-- JAVASCRIPT LOGIC ENGINE -->
   <script>
-    const STORAGE_KEY = 'winter_arc_90day_blueprint_v4';
+    const STORAGE_KEY = 'winter_arc_90day_blueprint_v5';
 
     // Master Daily Supplement Protocol Re-calibrated to 11:30 AM Wake Schedule
     const MASTER_SUPPLEMENT_PROTOCOL = [
@@ -866,7 +866,7 @@
     }
 
     function loadStoredDatabase() {
-      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('winter_arc_90day_blueprint_v3') || localStorage.getItem('winter_arc_90day_blueprint_v2') || localStorage.getItem('winter_arc_90day_blueprint_v1');
+      const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('winter_arc_90day_blueprint_v4') || localStorage.getItem('winter_arc_90day_blueprint_v3') || localStorage.getItem('winter_arc_90day_blueprint_v2') || localStorage.getItem('winter_arc_90day_blueprint_v1');
       if (raw) {
         try { return JSON.parse(raw); } catch (e) { console.error('Parse error', e); }
       }
@@ -901,7 +901,14 @@
         const splitKey = getDefaultSplitKeyForDay(dayIdx);
 
         const template = WORKOUT_SCHEDULE[splitKey];
-        const initialMoves = template.moves.map(m => ({ ...m, done: false, loggedWeight: '' }));
+        const initialMoves = template.moves.map(m => ({
+          ...m,
+          done: false,
+          setNumber: m.sets ? String(m.sets) : '',
+          totalWeight: '',
+          repsLogged: m.reps ? String(m.reps) : '',
+          userNotes: ''
+        }));
 
         const initialCodes = { J: false, S: false, O: false, E: false, R: false, C: false, L: false };
         const initialTimeline = {};
@@ -942,6 +949,24 @@
           rec.timeline[item.id] = false;
         }
       });
+
+      // Migrate workout moves structure: ensure setNumber, totalWeight, repsLogged, userNotes
+      if (rec.workoutMoves && Array.isArray(rec.workoutMoves)) {
+        rec.workoutMoves.forEach(m => {
+          if (typeof m.setNumber === 'undefined') {
+            m.setNumber = m.sets ? String(m.sets) : '';
+          }
+          if (typeof m.totalWeight === 'undefined') {
+            m.totalWeight = m.loggedWeight || '';
+          }
+          if (typeof m.repsLogged === 'undefined') {
+            m.repsLogged = m.reps ? String(m.reps) : '';
+          }
+          if (typeof m.userNotes === 'undefined') {
+            m.userNotes = '';
+          }
+        });
+      }
 
       return rec;
     }
@@ -1193,7 +1218,6 @@
           `;
         }
 
-        // Special render for 9:30 PM Dinner with Paneer vs Soya toggle
         let bodyContentHtml = '';
         if (item.isDinnerSelector) {
           const isPaneer = (record.dinnerChoice || 'paneer') === 'paneer';
@@ -1321,7 +1345,8 @@
     }
 
     /* ----------------------------------------------------
-       WORKOUT ENGINE & EXERCISE CHECKLIST
+       WORKOUT ENGINE: 4-FIELD EXERCISE LOGGER
+       (Set Number, Total Weight, Reps, Notes)
     ---------------------------------------------------- */
     function renderWorkoutSection(record) {
       const splitSelector = document.getElementById('workout-split-selector');
@@ -1340,34 +1365,82 @@
 
       moves.forEach((move, idx) => {
         const item = document.createElement('div');
-        item.className = `p-3 rounded-xl border transition flex items-start justify-between gap-3 ${
+        item.className = `p-3.5 rounded-xl border transition flex flex-col gap-2.5 ${
           move.done ? 'bg-arc-500/10 border-arc-500/30' : 'bg-[#151f30] border-slate-800'
         }`;
 
-        item.innerHTML = `
-          <div class="flex items-start gap-2.5">
-            <button onclick="toggleWorkoutMove(${idx})" class="mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition ${
-              move.done ? 'bg-arc-500 border-arc-500 text-slate-950 font-bold' : 'border-slate-600 hover:border-slate-400'
-            }">
-              ${move.done ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
-            </button>
-            <div>
-              <div class="text-xs font-bold ${move.done ? 'line-through text-slate-400' : 'text-white'}">
-                ${escapeHtml(move.name)}
-              </div>
-              <div class="text-[11px] text-slate-400 mt-0.5 flex flex-wrap items-center gap-1.5">
-                <span class="text-arc-400 font-semibold">${move.sets} sets × ${move.reps}</span>
-                <span>•</span>
-                <span class="italic text-slate-400">${escapeHtml(move.cue)}</span>
+        // Top line: checkbox + title + prescribed cues
+        const topRow = `
+          <div class="flex items-start justify-between gap-2.5">
+            <div class="flex items-start gap-2.5 min-w-0">
+              <button onclick="toggleWorkoutMove(${idx})" class="mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition shrink-0 ${
+                move.done ? 'bg-arc-500 border-arc-500 text-slate-950 font-bold' : 'border-slate-600 hover:border-slate-400'
+              }">
+                ${move.done ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
+              </button>
+              <div class="min-w-0">
+                <div class="text-xs font-bold ${move.done ? 'line-through text-slate-400' : 'text-white'} truncate">
+                  ${escapeHtml(move.name)}
+                </div>
+                <div class="text-[11px] text-slate-400 mt-0.5 flex flex-wrap items-center gap-1.5">
+                  <span class="text-arc-400 font-semibold">${move.sets} sets × ${move.reps}</span>
+                  <span>•</span>
+                  <span class="italic text-slate-400">${escapeHtml(move.cue)}</span>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="flex items-center gap-2 shrink-0">
-            <input type="text" placeholder="kg/notes" value="${escapeHtml(move.loggedWeight || '')}" onchange="saveMoveWeight(${idx}, this.value)" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none focus:border-arc-500">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400 shrink-0">
+              #${idx + 1}
+            </span>
           </div>
         `;
 
+        // Dedicated 4 Sections: Set Number, Total Weight, Number of Reps, Notes
+        const inputFieldsRow = `
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 border-t border-slate-800/80">
+            <!-- 1. Set Number -->
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-slate-400 mb-0.5 tracking-wider">Set #</label>
+              <input type="text" 
+                     placeholder="e.g. 3" 
+                     value="${escapeHtml(move.setNumber || '')}" 
+                     oninput="updateExerciseField(${idx}, 'setNumber', this.value)" 
+                     class="w-full bg-slate-900 border border-slate-700/80 rounded-lg px-2 py-1 text-xs text-white font-mono focus:outline-none focus:border-arc-500 transition">
+            </div>
+
+            <!-- 2. Total Weight -->
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-slate-400 mb-0.5 tracking-wider">Weight (kg)</label>
+              <input type="text" 
+                     placeholder="e.g. 12 kg" 
+                     value="${escapeHtml(move.totalWeight || '')}" 
+                     oninput="updateExerciseField(${idx}, 'totalWeight', this.value)" 
+                     class="w-full bg-slate-900 border border-slate-700/80 rounded-lg px-2 py-1 text-xs text-white font-mono focus:outline-none focus:border-arc-500 transition">
+            </div>
+
+            <!-- 3. Number of Reps -->
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-slate-400 mb-0.5 tracking-wider">Reps</label>
+              <input type="text" 
+                     placeholder="e.g. 10" 
+                     value="${escapeHtml(move.repsLogged || '')}" 
+                     oninput="updateExerciseField(${idx}, 'repsLogged', this.value)" 
+                     class="w-full bg-slate-900 border border-slate-700/80 rounded-lg px-2 py-1 text-xs text-white font-mono focus:outline-none focus:border-arc-500 transition">
+            </div>
+
+            <!-- 4. Notes -->
+            <div>
+              <label class="block text-[10px] uppercase font-bold text-slate-400 mb-0.5 tracking-wider">Notes / Cues</label>
+              <input type="text" 
+                     placeholder="e.g. 2s pause" 
+                     value="${escapeHtml(move.userNotes || '')}" 
+                     oninput="updateExerciseField(${idx}, 'userNotes', this.value)" 
+                     class="w-full bg-slate-900 border border-slate-700/80 rounded-lg px-2 py-1 text-xs text-slate-200 focus:outline-none focus:border-arc-500 transition">
+            </div>
+          </div>
+        `;
+
+        item.innerHTML = topRow + inputFieldsRow;
         movesContainer.appendChild(item);
       });
     }
@@ -1379,11 +1452,16 @@
       renderCompleteApp();
     }
 
-    function saveMoveWeight(idx, val) {
+    function updateExerciseField(moveIdx, fieldKey, value) {
       const record = getOrInitDateRecord(currentDateStr);
-      record.workoutMoves[idx].loggedWeight = val;
-      saveStoredDatabase();
-      showToast('Movement Load Saved');
+      if (record.workoutMoves && record.workoutMoves[moveIdx]) {
+        record.workoutMoves[moveIdx][fieldKey] = value;
+        // Keep backwards-compatibility with older loggedWeight schema if updating totalWeight
+        if (fieldKey === 'totalWeight') {
+          record.workoutMoves[moveIdx].loggedWeight = value;
+        }
+        saveStoredDatabase();
+      }
     }
 
     function markCurrentWorkoutAllDone() {
@@ -1599,7 +1677,14 @@
         const record = getOrInitDateRecord(currentDateStr);
         record.splitKey = selected;
         const template = WORKOUT_SCHEDULE[selected];
-        record.workoutMoves = template.moves.map(m => ({ ...m, done: false, loggedWeight: '' }));
+        record.workoutMoves = template.moves.map(m => ({
+          ...m,
+          done: false,
+          setNumber: m.sets ? String(m.sets) : '',
+          totalWeight: '',
+          repsLogged: m.reps ? String(m.reps) : '',
+          userNotes: ''
+        }));
         saveStoredDatabase();
         renderCompleteApp();
         showToast(`Loaded ${selected}`);
